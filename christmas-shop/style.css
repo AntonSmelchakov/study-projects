@@ -21,8 +21,11 @@ html {
 
 h1,
 h2,
+h3,
 p {
+  font-weight: 600;
   margin: 0;
+  color: inherit;
 }
 
 body {
@@ -40,7 +43,6 @@ a {
   text-decoration: none;
   font-weight: 600;
   font-size: 12px;
-  color: var(--dark);
   text-align: center;
   color: inherit;
 }
@@ -67,6 +69,15 @@ header {
 h1 {
   font-size: inherit;
   font-weight: inherit;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--static-white);
 }
 
 header>ul {
@@ -99,11 +110,11 @@ header>ul>li>a {
 main {
   background: var(--primary);
   border-radius: 20px;
-  height: 500px;
 }
 
 footer {
   padding: 60px 0px 60px 20px;
+  color: var(--dark);
 }
 
 footer>div {
@@ -125,7 +136,7 @@ footer>div {
   transition: 0.2s;
 }
 
-h2 {
+h3 {
   font-size: 24px;
   line-height: 152%;
   letter-spacing: 0.16em;
@@ -162,7 +173,7 @@ p {
   letter-spacing: normal;
 }
 
-.transparentpanel>a {
+.fancyText {
   font-family: var(--second-family);
   font-weight: 400;
   font-size: 24px;
@@ -182,4 +193,10 @@ p {
 
 footer a:hover {
   color: var(--primary);
+}
+
+button {
+  background: var(--dark);
+  color: var(--static-white);
+  letter-spacing: 0.05em;
 }

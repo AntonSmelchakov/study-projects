@@ -1,0 +1,12 @@
+.button {
+    box-sizing: content-box;
+    border: none;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+
+.button>a {
+    display: inline-block;
+    padding: 22px 32px;
+}

@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    height: 524px;
+    background: center / cover url('../../../img/bg-snow.png'), center/cover url('../../../img/bg-ball.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-left: 14px;
+}
+
+.textContainer {
+    max-width: 426px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fancyText {
+    composes: fancyText from '../../../style.css';
+}
