@@ -1,0 +1,61 @@
+.container {
+    width: 100%;
+    background: center / cover url('../../../img/bg-snow.png');
+    color: var(--static-white);
+    border-radius: inherit;
+    padding: 60px 0px 60px 17px;
+}
+
+.containerGeneral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    border-radius: inherit;
+    gap: 13px;
+}
+
+.sliderContainer {
+    display: flex;
+    border-radius: inherit;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    margin: 6px 0px 0px 713px;
+    left: 0px;
+
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: inherit;
+    }
+
+    p {
+        font-family: var(--font-family);
+        font-weight: 600;
+        font-size: 80px;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+    }
+}
+
+.buttonContainer {
+    margin: 8px 67px 0px 0px;
+    align-self: end;
+    display: flex;
+    gap: 20px;
+}
+
+.buttonSlider {
+    box-sizing: border-box;
+    border: 1px solid var(--static-white-40);
+    background: transparent;
+    border-radius: 20px;
+    width: 56px;
+    height: 56px;
+}
+
+.fancyText {
+    composes: fancyText from global;
+}

@@ -1,0 +1,63 @@
+import styles from './index.module.css';
+import createButton from '../button';
+
+function createSliderPanel({ className, parent }) {
+
+    const sliderPanel = document.createElement('article');
+    const containerGeneral = document.createElement('div');
+    const sliderContainer = document.createElement('div');
+    const buttonContainer = document.createElement('div');
+
+    const firstGeneralText = document.createElement('p');
+    const secondGeneralText = document.createElement('h3');
+
+    const svgLeftArrow = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M13.5 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-opacity="0.4" stroke-linecap="round" stroke-linejoin="round" /></svg>'
+    const svgRightArrow = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13.5M13.5 7L7.5 1M13.5 7L7.5 13" stroke="white" stroke-linecap="round" stroke-linejoin="round" /></svg>'
+
+    const btnLeft = createButton({ className: 'button', svg: svgLeftArrow });
+    const btnRight = createButton({ className: 'button', svg: svgRightArrow });
+
+    firstGeneralText.textContent = 'Become Happier!';
+    secondGeneralText.textContent = 'in the new 2025';
+
+    const textArr = ['live', 'create', 'love', 'dream'];
+
+    const imgSrcArr = [
+        '../../img/snowman.png',
+        '../../img/christmas-trees.png',
+        '../../img/christmas-tree-ball.png',
+        '../../img/fairytale-house.png'
+    ];
+
+    for (let i = 0; i < 4; i += 1) {
+        let sliderText = document.createElement('p');
+        sliderText.textContent = textArr[i];
+        sliderText.className = styles.sliderText;
+        let sliderImage = document.createElement('img');
+        sliderImage.src = imgSrcArr[i];
+        sliderImage.className = styles.sliderImage;
+        sliderImage.alt = imgSrcArr[i].slice(10, -4);
+        sliderContainer.append(sliderText, sliderImage);
+    }
+
+    sliderPanel.classList.add(styles.container);
+    containerGeneral.classList.add(styles.containerGeneral);
+    firstGeneralText.className = styles.fancyText;
+    secondGeneralText.className = styles.normalText;
+    sliderContainer.classList.add(styles.sliderContainer);
+    buttonContainer.classList.add(styles.buttonContainer);
+    btnLeft.classList.add(styles.buttonSlider);
+    btnRight.classList.add(styles.buttonSlider);
+
+    buttonContainer.append(btnLeft, btnRight);
+    containerGeneral.append(firstGeneralText, secondGeneralText, sliderContainer, buttonContainer);
+    sliderPanel.append(containerGeneral);
+
+    if (className) {
+        sliderPanel.classList.add(className);
+    }
+
+    parent.append(sliderPanel);
+}
+
+export default createSliderPanel;
