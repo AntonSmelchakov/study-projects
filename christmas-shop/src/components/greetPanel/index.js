@@ -24,7 +24,7 @@ function createGreetPanel({ className, parent }) {
     textContainer.className = styles.textContainer;
     first.className = styles.fancyText;
     second.className = styles.bigText;
-    fourth.className = styles.fancyText
+    fourth.className = 'fancyText'
     textContainer.append(first, second, third, fourth);
     greetPanel.append(textContainer);
 

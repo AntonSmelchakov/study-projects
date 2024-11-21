@@ -23,28 +23,25 @@ h1,
 h2,
 h3,
 p {
-  font-weight: 600;
   margin: 0;
   color: inherit;
+  text-align: inherit;
 }
 
 body {
   background: var(--static-white);
+}
+
+a {
+  text-decoration: none;
+  text-align: center;
+  color: inherit;
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 12px;
   line-height: 130%;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--dark);
-}
-
-a {
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 12px;
-  text-align: center;
-  color: inherit;
 }
 
 header {
@@ -67,17 +64,31 @@ header {
 }
 
 h1 {
-  font-size: inherit;
-  font-weight: inherit;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 h2 {
+  font-family: var(--font-family);
+  font-weight: 600;
   font-size: 32px;
   line-height: 150%;
   letter-spacing: 0.17em;
   text-transform: uppercase;
-  text-align: center;
   color: var(--static-white);
+}
+
+h3 {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 152%;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 header>ul {
@@ -94,7 +105,7 @@ header>ul>li {
 }
 
 header>ul>li:hover {
-  background: rgba(255, 70, 70, 0.1);
+  background: var(--primary-10);
   color: var(--primary);
 }
 
@@ -136,21 +147,6 @@ footer>div {
   transition: 0.2s;
 }
 
-h3 {
-  font-size: 24px;
-  line-height: 152%;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-p {
-  font-size: 16px;
-  line-height: 152%;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-}
 
 .transparentpanel {
   display: flex;
@@ -181,6 +177,14 @@ p {
   letter-spacing: 0.05em;
   text-transform: none;
   transition: 0.2s;
+}
+
+.normalText {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 148%;
+  color: var(--dark);
 }
 
 .transparentpanel>div>a {

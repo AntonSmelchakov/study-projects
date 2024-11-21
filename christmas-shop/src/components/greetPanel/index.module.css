@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--static-white);
     padding-left: 14px;
 }
 
@@ -14,8 +14,9 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    text-align: center;
 }
 
 .fancyText {
-    composes: fancyText from '../../../style.css';
+    composes: fancyText from global;
 }
