@@ -11,7 +11,7 @@ function createAboutPanel({ className, parent }) {
     const imageOne = document.createElement('img');
 
     const first = document.createElement('p');
-    const second = document.createElement('h3');
+    const second = document.createElement('h2');
     const third = document.createElement('p');
 
     first.textContent = 'About';

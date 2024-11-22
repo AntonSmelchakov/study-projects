@@ -1,0 +1,27 @@
+.container {
+    width: 100%;
+    background: center / cover url('../../../img/bg-snow.png');
+    color: var(--static-white);
+    border-radius: inherit;
+    padding: 60px 0px 60px 17px;
+}
+
+.containerGeneral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    border-radius: inherit;
+    gap: 13px;
+}
+
+.panelContainer {
+    margin-top: 4px;
+    border-radius: inherit;
+    display: flex;
+    gap: 12px;
+}
+
+.fancyText {
+    composes: fancyText from global;
+}

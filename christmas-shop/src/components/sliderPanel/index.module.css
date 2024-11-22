@@ -21,8 +21,9 @@
     align-items: center;
     gap: 20px;
     position: relative;
-    margin: 6px 0px 0px 713px;
-    left: 0px;
+    margin-top: 6px;
+    left: 66px;
+    align-self: self-start;
 
     img {
         width: 200px;

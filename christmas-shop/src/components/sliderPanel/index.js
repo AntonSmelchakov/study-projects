@@ -9,7 +9,7 @@ function createSliderPanel({ className, parent }) {
     const buttonContainer = document.createElement('div');
 
     const firstGeneralText = document.createElement('p');
-    const secondGeneralText = document.createElement('h3');
+    const secondGeneralText = document.createElement('h2');
 
     const svgLeftArrow = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">  <path d="M13.5 7H1M1 7L7 1M1 7L7 13" stroke="white" stroke-opacity="0.4" stroke-linecap="round" stroke-linejoin="round" /></svg>'
     const svgRightArrow = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7H13.5M13.5 7L7.5 1M13.5 7L7.5 13" stroke="white" stroke-linecap="round" stroke-linejoin="round" /></svg>'
@@ -43,7 +43,6 @@ function createSliderPanel({ className, parent }) {
     sliderPanel.classList.add(styles.container);
     containerGeneral.classList.add(styles.containerGeneral);
     firstGeneralText.className = styles.fancyText;
-    secondGeneralText.className = styles.normalText;
     sliderContainer.classList.add(styles.sliderContainer);
     buttonContainer.classList.add(styles.buttonContainer);
     btnLeft.classList.add(styles.buttonSlider);
