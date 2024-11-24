@@ -1,0 +1,89 @@
+.container {
+    width: 100%;
+    background: 50% 0% / 100% no-repeat url('../../../img/bg-garland.png');
+    color: var(--static-white);
+    border-radius: inherit;
+    padding: 58px 68px;
+    transition: 0.5s;
+}
+
+.containerGeneral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    border-radius: inherit;
+}
+
+.tabsPanel {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0 15px;
+}
+
+.tab {
+    box-sizing: content-box;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 12px;
+    padding: 12px 20px 12px;
+    background: transparent;
+    border: none;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.tab:hover {
+    background: var(--static-white-20);
+    cursor: pointer;
+}
+
+.panelContainer {
+    margin-top: 5px;
+    border-radius: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.bigText {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--static-white);
+    max-width: 488px;
+    text-align: center;
+}
+
+@media (width <=1080px) {
+    .container {
+        padding: 60px 68px;
+    }
+
+    .tabsPanel {
+        gap: 16px;
+    }
+}
+
+
+@media (width <=425px) {
+    .container {
+        padding: 60px 3px 77px;
+    }
+
+    .tab {
+        padding: 13px 12px 11px;
+    }
+
+    .tabsPanel {
+        gap: 0px;
+    }
+}
