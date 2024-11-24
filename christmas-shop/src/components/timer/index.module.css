@@ -1,0 +1,41 @@
+.generalContainer {
+    border-radius: 20px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--static-white-40);
+    padding: 8px 24px 12px;
+    width: 344px;
+    height: 72px;
+    margin: 0 auto;
+}
+
+.separator {
+    background: var(--static-white);
+    width: 1px;
+    height: 37%;
+}
+
+.valueContainer {
+    text-align: center;
+    width: 20%;
+}
+
+.numValue {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 152%;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.textValue {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}

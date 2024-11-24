@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    height: 524px;
+    background: center / cover url('../../../img/bg-snow.png'), center/ cover url('../../../img/bg-ball.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--static-white);
+}
+
+.textContainer {
+    max-width: 429px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+
+.bigText {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--static-white);
+}
+
+.fancyText {
+    composes: fancyText from global;
+}
+
+@media (width <=425px) {
+    .container {
+        background-size: 360%;
+        background-position: 50% 0%;
+    }
+
+    .textContainer {
+        padding-top: 50px;
+    }
+}

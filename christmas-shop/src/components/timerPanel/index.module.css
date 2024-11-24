@@ -1,0 +1,34 @@
+.container {
+    width: 100%;
+    height: 668px;
+    background: center / cover url('../../../img/bg-snow.png'), center bottom/ cover url('../../../img/bg-forest.png');
+    display: flex;
+    justify-content: center;
+    color: var(--static-white);
+}
+
+.generalContainer {
+    max-width: 426px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    justify-content: center;
+    text-align: center;
+    padding-top: 12px;
+}
+
+.generalContainer>div:last-child {
+    position: relative;
+    top: -7px;
+}
+
+.fancyText {
+    composes: fancyText from global;
+}
+
+@media (width <=425px) {
+    .container {
+        background-size: 398% 103%;
+        background-position: 50% 23%;
+    }
+}

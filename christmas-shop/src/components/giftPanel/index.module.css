@@ -1,0 +1,50 @@
+.panel {
+    border-radius: inherit;
+    width: 310px;
+    height: 342px;
+    background: var(--content-background);
+    color: var(--dark);
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        transition: 0.2s;
+    }
+}
+
+.newImage {
+    width: 310px;
+    height: 230px;
+}
+
+.textContainer {
+    border-radius: inherit;
+    background: var(--static-white);
+    padding: 20px 0 0 19px;
+    flex: 1 0;
+}
+
+.typeText {
+    margin-bottom: 10px;
+}
+
+.panel:hover {
+
+    cursor: pointer;
+
+    h3 {
+        color: var(--primary);
+    }
+}
+
+.harmony {
+    color: var(--tag-pink);
+}
+
+.health {
+    color: var(--tag-green);
+}
+
+.work {
+    color: var(--tag-purple);
+}
