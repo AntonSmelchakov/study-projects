@@ -29,3 +29,14 @@
 .fancyText {
     composes: fancyText from global;
 }
+
+@media (width <=425px) {
+    .container {
+        background-size: 360%;
+        background-position: 50% 0%;
+    }
+
+    .textContainer {
+        padding-top: 50px;
+    }
+}

@@ -6,6 +6,10 @@
     color: var(--dark);
     display: flex;
     flex-direction: column;
+
+    h3 {
+        transition: 0.2s;
+    }
 }
 
 .newImage {

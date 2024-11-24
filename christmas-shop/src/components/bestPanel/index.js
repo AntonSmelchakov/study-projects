@@ -4,6 +4,7 @@ import createGiftPanel from '../giftPanel';
 function createBestPanel({ className, parent, gifts }) {
 
     const bestPanel = document.createElement('article');
+    bestPanel.id = 'bestPanel';
     bestPanel.classList.add(styles.container);
 
     const containerGeneral = document.createElement('div');

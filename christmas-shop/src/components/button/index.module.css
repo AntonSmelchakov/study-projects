@@ -4,9 +4,15 @@
     border-radius: 20px;
     text-transform: uppercase;
     margin: 0 auto;
+    transition: 0.2s;
 }
 
 .button>a {
     display: inline-block;
     padding: 20px 25px;
+}
+
+.button:hover {
+    background: var(--static-white);
+    color: var(--dark);
 }

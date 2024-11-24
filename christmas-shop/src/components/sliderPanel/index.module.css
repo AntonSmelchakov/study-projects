@@ -3,7 +3,8 @@
     background: center / cover url('../../../img/bg-snow.png');
     color: var(--static-white);
     border-radius: inherit;
-    padding: 62px 83px
+    padding: 62px 83px;
+    transition: 0.5s;
 }
 
 .containerGeneral {
@@ -56,6 +57,21 @@
     height: 56px;
 }
 
+.buttonSlider:hover {
+    background: var(--static-white);
+    cursor: pointer;
+
+    svg {
+        color: var(--primary);
+    }
+}
+
 .fancyText {
     composes: fancyText from global;
+}
+
+@media (width <=1080px) {
+    .container {
+        padding: 60px 9px;
+    }
 }

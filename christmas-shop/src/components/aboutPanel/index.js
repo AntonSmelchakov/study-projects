@@ -3,6 +3,7 @@ import styles from './index.module.css';
 function createAboutPanel({ className, parent }) {
 
     const aboutPanel = document.createElement('article');
+    aboutPanel.id = 'aboutPanel';
 
     const containerGeneral = document.createElement('div');
 
