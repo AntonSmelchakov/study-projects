@@ -2,7 +2,7 @@
     width: 100%;
     background: center / cover url('../../../img/bg-snow.png');
     color: var(--dark);
-    padding: 60px 68px 60px 82px;
+    padding: 59px 82px;
     border-radius: inherit;
 }
 

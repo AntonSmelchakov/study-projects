@@ -130,6 +130,7 @@ header>ul>li>a {
 main {
   background: var(--primary);
   border-radius: 20px;
+  overflow: hidden;
 }
 
 footer {

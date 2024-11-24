@@ -1,34 +1,29 @@
 import styles from './index.module.css';
 import createButton from '../button';
+import createTimer from '../timer';
 
-function createGreetPanel({ className, parent }) {
+function createTimerPanel({ className, parent }) {
 
-    const greetPanel = document.createElement('article');
+    const timerPanel = document.createElement('article');
+    if (className) timerPanel.classList.add(className)
+    timerPanel.classList.add(styles.container);
+    parent.append(timerPanel);
 
-    const textContainer = document.createElement('div');
+    const generalContainer = document.createElement('div');
+    generalContainer.className = styles.generalContainer;
+    timerPanel.append(generalContainer);
 
-    const first = document.createElement('p');
-    const second = document.createElement('h2');
-    const third = createButton({ text: 'explore magical gifts', link: './gifts/gifts.html' });
-    const fourth = document.createElement('p')
+    const first = document.createElement('h2');
+    first.textContent = 'Ready to start your journey to a better version of yourself?';
+    /*     first.className = styles.fancyText; */
+    const second = createButton({ text: 'explore magical gifts', link: './gifts/gifts.html' });
+    /*    second.className = styles.blackButton */
+    const third = document.createElement('p')
+    third.textContent = 'The New Year is Coming Soon...';
+    third.className = styles.fancyText;
 
-    first.textContent = 'Merry Christmas';
-    second.textContent = 'Gift yourself the magic of new possibilities';
-    fourth.textContent = 'and Happy New Year';
+    generalContainer.append(first, second, third, createTimer());
 
-    if (className) {
-        greetPanel.classList.add(className)
-    }
-
-    greetPanel.classList.add(styles.container);
-    textContainer.className = styles.textContainer;
-    first.className = styles.fancyText;
-    second.className = styles.bigText;
-    fourth.className = 'fancyText'
-    textContainer.append(first, second, third, fourth);
-    greetPanel.append(textContainer);
-
-    parent.append(greetPanel);
 }
 
-export default createGreetPanel;
+export default createTimerPanel;
