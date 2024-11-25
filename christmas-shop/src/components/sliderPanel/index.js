@@ -23,10 +23,10 @@ function createSliderPanel({ className, parent }) {
     const textArr = ['live', 'create', 'love', 'dream'];
 
     const imgSrcArr = [
-        '../../img/snowman.png',
-        '../../img/christmas-trees.png',
-        '../../img/christmas-tree-ball.png',
-        '../../img/fairytale-house.png'
+        './img/snowman.png',
+        './img/christmas-trees.png',
+        './img/christmas-tree-ball.png',
+        './img/fairytale-house.png'
     ];
 
     for (let i = 0; i < 4; i += 1) {

@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     height: 668px;
-    background: center / cover url('../../../img/bg-snow.png'), center bottom/ cover url('../../../img/bg-forest.png');
+    background: center / cover url('./img/bg-snow.png'), center bottom/ cover url('./img/bg-forest.png');
     display: flex;
     justify-content: center;
     color: var(--static-white);

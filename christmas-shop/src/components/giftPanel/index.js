@@ -18,9 +18,9 @@ function createGiftPanel(type, name, parent) {
     typeText.classList.add(styles.typeText);
 
     switch (type) {
-        case 'For Harmony': typeText.classList.add(styles.harmony); newImage.src = '../../../img/gift-for-harmony.png'; break;
-        case 'For Health': typeText.classList.add(styles.health); newImage.src = '../../../img/gift-for-health.png'; break;
-        case 'For Work': typeText.classList.add(styles.work); newImage.src = '../../../img/gift-for-work.png'; break;
+        case 'For Harmony': typeText.classList.add(styles.harmony); newImage.src = './img/gift-for-harmony.png'; break;
+        case 'For Health': typeText.classList.add(styles.health); newImage.src = './img/gift-for-health.png'; break;
+        case 'For Work': typeText.classList.add(styles.work); newImage.src = './img/gift-for-work.png'; break;
     }
 
     const nameText = document.createElement('h3');

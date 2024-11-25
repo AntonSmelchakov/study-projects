@@ -19,7 +19,7 @@ function createAboutPanel({ className, parent }) {
     second.textContent = 'Unleash your inner superhero!';
     third.textContent = 'This New Year marks the beginning of your journey to inner harmony and new strengths. We offer unique gifts that will help you improve your life.';
 
-    imageOne.src = '../../img/santa.png';
+    imageOne.src = './img/santa.png';
 
     aboutPanel.classList.add(styles.container);
     textContainer.classList.add(styles.textContainer);

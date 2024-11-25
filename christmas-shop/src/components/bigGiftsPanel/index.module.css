@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    background: 50% 0% / 100% no-repeat url('../../../img/bg-garland.png');
+    background: 50% 0% / 100% no-repeat url('./img/bg-garland.png');
     color: var(--static-white);
     border-radius: inherit;
     padding: 58px 68px;
