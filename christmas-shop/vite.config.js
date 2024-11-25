@@ -10,6 +10,7 @@ export default defineConfig({
                 gifts: './gifts/gifts.html'
             },
         },
-        target: 'esnext'
+        target: 'esnext',
+        outDir: './build'
     }
 })
