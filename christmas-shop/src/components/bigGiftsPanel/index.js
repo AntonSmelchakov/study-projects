@@ -38,7 +38,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
     const newPanels = gifts.slice(0, 12);
 
     newPanels.forEach(x => {
-        createGiftPanel(x.category, x.name, panelContainer)
+        createGiftPanel(x.category, x.name, panelContainer, '../')
     })
 
     if (className) {

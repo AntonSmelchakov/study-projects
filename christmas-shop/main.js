@@ -6,7 +6,7 @@ import createSliderPanel from './src/components/sliderPanel';
 import createBestPanel from './src/components/bestPanel';
 import createTimerPanel from './src/components/timerPanel';
 
-const gifts = await fetch('../../json/gifts.json').then(resp => resp.json());
+const gifts = await fetch('./json/gifts.json').then(resp => resp.json());
 
 const main = document.querySelector('main');
 

@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    background: 50% 0% / 100% no-repeat url('../../../img/bg-garland.png');
+    background: 50% 0% / 100% no-repeat url('/img/bg-garland.png');
     color: var(--static-white);
     border-radius: inherit;
     padding: 58px 68px;
@@ -19,7 +19,7 @@
     display: flex;
     justify-content: center;
     gap: 8px;
-    padding: 20px 0 15px;
+    padding: 22px 0px 15px;
 }
 
 .tab {
@@ -27,10 +27,11 @@
     font-weight: 600;
     font-size: 12px;
     line-height: 130%;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     border-radius: 12px;
-    padding: 12px 20px 12px;
+    height: 40px;
+    padding: 0px 21px;
     background: transparent;
     border: none;
     text-align: center;
@@ -69,18 +70,18 @@
     }
 
     .tabsPanel {
-        gap: 16px;
+        padding: 22px 0px 13px;
     }
 }
 
 
 @media (width <=425px) {
     .container {
-        padding: 60px 3px 77px;
+        padding: 60px 3px;
     }
 
     .tab {
-        padding: 13px 12px 11px;
+        padding: 0px 9px;
     }
 
     .tabsPanel {
