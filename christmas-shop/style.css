@@ -121,6 +121,12 @@ header>ul>li:hover {
   color: var(--primary);
 }
 
+@media (hover:none) {
+  li {
+    pointer-events: none;
+  }
+}
+
 header>ul>li>a {
   display: flex;
   justify-content: center;
@@ -225,6 +231,12 @@ footer>div {
 footer a:hover {
   color: var(--primary);
   transition: 0.2s;
+}
+
+@media (hover:none) {
+  footer {
+    pointer-events: none;
+  }
 }
 
 button {

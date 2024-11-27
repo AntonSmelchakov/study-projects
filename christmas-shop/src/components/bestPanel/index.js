@@ -27,7 +27,7 @@ function createBestPanel({ className, parent, gifts }) {
     const newPanels = gifts.slice(0, 4);
 
     newPanels.forEach(x => {
-        createGiftPanel(x.category, x.name, panelContainer, './')
+        createGiftPanel(x.category, x.name, panelContainer, '.')
     })
 
     if (className) {
