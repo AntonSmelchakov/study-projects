@@ -121,9 +121,10 @@ header>ul>li:hover {
   color: var(--primary);
 }
 
-@media (hover:none) {
-  li {
-    pointer-events: none;
+@media (hover: none) and (pointer: none) {
+  header>ul>li:hover {
+    background: white;
+    color: inherit;
   }
 }
 
@@ -234,8 +235,8 @@ footer a:hover {
 }
 
 @media (hover:none) {
-  footer {
-    pointer-events: none;
+  footer a:hover {
+    color: inherit;
   }
 }
 
