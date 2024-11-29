@@ -1,10 +1,11 @@
-.container {
+:global(#aboutPanel) {
     width: 100%;
     background: center / cover url('/img/bg-snow.png');
     color: var(--dark);
     padding: 59px 82px;
     border-radius: inherit;
     transition: 0.5s;
+    min-height: 526px;
 }
 
 .containerGeneral {
@@ -44,7 +45,7 @@
 }
 
 @media (width <=1080px) {
-    .container {
+    :global(#aboutPanel) {
         padding: 60px 8px;
     }
 
@@ -53,8 +54,8 @@
     }
 }
 
-@media (width <=425px) {
-    .container {
+@media (width <=626px) {
+    :global(#aboutPanel) {
         padding-top: 108px;
     }
 

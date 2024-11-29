@@ -1,10 +1,11 @@
-.container {
+:global(#sliderPanel) {
     width: 100%;
     background: center / cover url('/img/bg-snow.png');
     color: var(--static-white);
     border-radius: inherit;
     padding: 62px 83px;
     transition: 0.5s;
+    min-height: 368px;
 }
 
 .containerGeneral {
@@ -50,19 +51,25 @@
 
 .buttonSlider {
     box-sizing: border-box;
-    border: 1px solid var(--static-white-40);
+    border: 1px solid var(--static-white);
     background: transparent;
     border-radius: 20px;
     width: 56px;
     height: 56px;
-}
-
-.buttonSlider:hover {
-    background: var(--static-white);
-    cursor: pointer;
 
     svg {
-        color: var(--primary);
+        color: var(--static-white);
+    }
+}
+
+@media (hover:hover) {
+    .buttonSlider:hover {
+        background: var(--static-white);
+        cursor: pointer;
+
+        svg {
+            color: var(--primary);
+        }
     }
 }
 
@@ -71,7 +78,7 @@
 }
 
 @media (width <=1080px) {
-    .container {
+    :global(#sliderPanel) {
         padding: 60px 9px;
     }
 }

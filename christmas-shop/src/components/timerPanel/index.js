@@ -2,12 +2,10 @@ import styles from './index.module.css';
 import createButton from '../button';
 import createTimer from '../timer';
 
-function createTimerPanel({ className, parent }) {
+function createTimerPanel() {
 
-    const timerPanel = document.createElement('article');
-    if (className) timerPanel.classList.add(className)
+    const timerPanel = document.querySelector('#timerPanel');
     timerPanel.classList.add(styles.container);
-    parent.append(timerPanel);
 
     const generalContainer = document.createElement('div');
     generalContainer.className = styles.generalContainer;

@@ -5,13 +5,15 @@ import createAboutPanel from './src/components/aboutPanel';
 import createSliderPanel from './src/components/sliderPanel';
 import createBestPanel from './src/components/bestPanel';
 import createTimerPanel from './src/components/timerPanel';
+import burgerFunc from './src/components/burger/script';
 
 const gifts = await fetch('./json/gifts.json').then(resp => resp.json());
 
 const main = document.querySelector('main');
 
-createGreetPanel({ className: 'greetPage', parent: main });
-createAboutPanel({ className: 'aboutPanel', parent: main });
-createSliderPanel({ className: 'sliderPanel', parent: main });
-createBestPanel({ className: 'bestPanel', parent: main, gifts: gifts });
-createTimerPanel({ className: 'timerPanel', parent: main });
+burgerFunc();
+createGreetPanel();
+createAboutPanel();
+createSliderPanel();
+createBestPanel(gifts);
+createTimerPanel();

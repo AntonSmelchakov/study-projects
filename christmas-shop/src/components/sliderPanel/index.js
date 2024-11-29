@@ -1,9 +1,9 @@
 import styles from './index.module.css';
 import createButton from '../button';
 
-function createSliderPanel({ className, parent }) {
+function createSliderPanel() {
 
-    const sliderPanel = document.createElement('article');
+    const sliderPanel = document.querySelector('#sliderPanel');
     const containerGeneral = document.createElement('div');
     const sliderContainer = document.createElement('div');
     const buttonContainer = document.createElement('div');
@@ -51,12 +51,6 @@ function createSliderPanel({ className, parent }) {
     buttonContainer.append(btnLeft, btnRight);
     containerGeneral.append(firstGeneralText, secondGeneralText, sliderContainer, buttonContainer);
     sliderPanel.append(containerGeneral);
-
-    if (className) {
-        sliderPanel.classList.add(className);
-    }
-
-    parent.append(sliderPanel);
 }
 
 export default createSliderPanel;

@@ -1,10 +1,9 @@
 import styles from './index.module.css';
 import createGiftPanel from '../giftPanel';
 
-function createBestPanel({ className, parent, gifts }) {
+function createBestPanel(gifts) {
 
-    const bestPanel = document.createElement('article');
-    bestPanel.id = 'bestPanel';
+    const bestPanel = document.querySelector('#bestPanel');
     bestPanel.classList.add(styles.container);
 
     const containerGeneral = document.createElement('div');
@@ -29,12 +28,6 @@ function createBestPanel({ className, parent, gifts }) {
     newPanels.forEach(x => {
         createGiftPanel(x.category, x.name, panelContainer, '.')
     })
-
-    if (className) {
-        bestPanel.classList.add(className);
-    }
-
-    parent.append(bestPanel);
 
 }
 
