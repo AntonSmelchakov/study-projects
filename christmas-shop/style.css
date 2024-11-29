@@ -94,6 +94,7 @@ header {
   justify-content: space-between;
   align-items: center;
   transition: 0.5s;
+  overflow-x: hidden;
 }
 
 .logo {
@@ -104,6 +105,8 @@ header {
   border-radius: 4px;
   width: 141px;
   height: 40px;
+  position: relative;
+  z-index: 3;
 }
 
 

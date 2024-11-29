@@ -1,17 +1,19 @@
-
-
-function burgerFunc() {
+export function burgerAnimationInit(elem) {
     const bars = document.querySelectorAll('.burgerBar');
-    const burger = document.querySelector('.burger');
-    burger.onclick = () => {
+    elem.addEventListener('click', () => {
         bars[0].style['animation-play-state'] = 'running'
         bars[1].style['animation-play-state'] = 'running'
-    }
+    })
+    return bars;
+}
+
+function burgerFunc() {
+    const burger = document.querySelector('.burger');
+    const bars = burgerAnimationInit(burger)
     bars[0].onanimationiteration = () => {
-        console.log('fuck')
         bars[0].style['animation-play-state'] = 'paused'
         bars[1].style['animation-play-state'] = 'paused'
     }
 }
 
-export default burgerFunc
+export default burgerFunc;

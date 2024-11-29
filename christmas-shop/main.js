@@ -6,12 +6,14 @@ import createSliderPanel from './src/components/sliderPanel';
 import createBestPanel from './src/components/bestPanel';
 import createTimerPanel from './src/components/timerPanel';
 import burgerFunc from './src/components/burger/script';
+import { createBurgerMenu, isClosed } from './src/components/burgerMenu/script';
 
 const gifts = await fetch('./json/gifts.json').then(resp => resp.json());
 
 const main = document.querySelector('main');
 
 burgerFunc();
+createBurgerMenu();
 createGreetPanel();
 createAboutPanel();
 createSliderPanel();
