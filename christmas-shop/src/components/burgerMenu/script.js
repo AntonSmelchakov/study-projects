@@ -14,7 +14,7 @@ function createBurgerMenu() {
     const burger = document.querySelector('.burger');
     const body = document.querySelector('body');
 
-    const clickArr = module.querySelectorAll('a');
+    const clickArr = module.querySelectorAll('li');
 
     clickArr.forEach(x => {
         burgerFuncs.burgerAnimationInit(x);

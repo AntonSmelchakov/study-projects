@@ -142,8 +142,11 @@ header>ul>li>a {
 .activeButton {
   background: var(--primary-10);
   color: var(--primary);
-  cursor: default;
-  pointer-events: none;
+
+  a {
+    pointer-events: none;
+  }
+
 }
 
 main {
