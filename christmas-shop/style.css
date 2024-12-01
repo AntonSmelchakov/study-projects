@@ -247,16 +247,6 @@ button {
   letter-spacing: 0.05em;
 }
 
-@media (width <=768px) {
-  header>ul {
-    display: none;
-  }
-
-  .burger {
-    display: flex;
-  }
-}
-
 @media (width <=1080px) {
   header {
     padding: 0 1.1vw;

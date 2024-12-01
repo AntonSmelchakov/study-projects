@@ -1,5 +1,6 @@
 .burger {
-    display: none;
+    display: flex;
+    visibility: hidden;
     border: none;
     background: transparent;
     width: 40px;
@@ -9,8 +10,9 @@
     justify-content: center;
     align-items: center;
     gap: 6px;
-    position: relative;
+    position: absolute;
     z-index: 3;
+    right: 8px;
 
     &:hover {
         cursor: pointer;
@@ -49,5 +51,15 @@
 
     100% {
         transform: rotate(-45deg) translateY(-5.5px);
+    }
+}
+
+@media (width <=768px) {
+    .list {
+        display: none;
+    }
+
+    .burger {
+        visibility: visible;
     }
 }

@@ -10,10 +10,6 @@ export function burgerAnimationInit(elem) {
 function burgerFunc() {
     const burger = document.querySelector('.burger');
     const bars = burgerAnimationInit(burger)
-    bars[0].onanimationiteration = () => {
-        bars[0].style['animation-play-state'] = 'paused'
-        bars[1].style['animation-play-state'] = 'paused'
-    }
 }
 
 export default burgerFunc;

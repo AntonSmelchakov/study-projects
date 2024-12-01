@@ -24,6 +24,9 @@
     margin-top: 5px;
     position: relative;
     align-self: start;
+    transition: 0.5s;
+    left: 0px;
+    width: 1993px;
 
     img {
         width: 200px;
@@ -47,6 +50,10 @@
     align-self: end;
     display: flex;
     gap: 20px;
+}
+
+.inactiveButton {
+    pointer-events: none;
 }
 
 .buttonSlider {
