@@ -4,7 +4,7 @@ function createButton({ text, onClick, link, className, image, svg }) {
     const button = document.createElement('button');
 
     if (onClick) {
-        button.onClick = onClick;
+        button.addEventListener('click', onClick);
     }
 
     if (className) {

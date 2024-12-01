@@ -8,7 +8,6 @@ function createTimer() {
     const newYear = Date.UTC(2025, 0, 0, 0, 0, 0);
     let count = now.getTime();
     let timeLeft = (newYear - count) / 1000;
-    console.log(timeLeft)
     let secondsVal = Math.trunc(timeLeft % 60);
     let minutesVal = Math.trunc((timeLeft / 60) % 60);
     let hoursVal = Math.trunc((timeLeft / (60 * 60)) % 24);
@@ -73,7 +72,6 @@ function createTimer() {
     setInterval(() => {
         count += 1000;
         timeLeft = (newYear - count) / 1000;
-        console.log(timeLeft % 60);
         seconds.textContent = Math.trunc(timeLeft % 60);
         minutes.textContent = Math.trunc((timeLeft / 60) % 60);
         hours.textContent = Math.trunc((timeLeft / (60 * 60)) % 24);

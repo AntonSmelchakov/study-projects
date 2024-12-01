@@ -5,6 +5,10 @@
     text-transform: uppercase;
     margin: 0 auto;
     transition: 0.2s;
+
+    svg {
+        vertical-align: middle;
+    }
 }
 
 .button>a {

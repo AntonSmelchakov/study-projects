@@ -52,9 +52,6 @@
     gap: 20px;
 }
 
-.inactiveButton {
-    pointer-events: none;
-}
 
 .buttonSlider {
     box-sizing: border-box;
@@ -63,10 +60,18 @@
     border-radius: 20px;
     width: 56px;
     height: 56px;
+    color: var(--static-white);
 
     svg {
-        color: var(--static-white);
+        color: inherit;
     }
+
+}
+
+.inactiveButton {
+    pointer-events: none;
+    border-color: var(--static-white-40);
+    color: var(--static-white-40);
 }
 
 @media (hover:hover) {
