@@ -2,13 +2,14 @@
     border-radius: 20px;
     text-transform: uppercase;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background: var(--static-white-40);
-    padding: 8px 24px 12px;
+    padding: 8px 0px 12px;
     width: 344px;
     height: 72px;
     margin: 0 auto;
+    gap: 5px;
 }
 
 .separator {
