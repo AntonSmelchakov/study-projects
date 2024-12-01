@@ -1,5 +1,6 @@
 import styles from './index.module.css';
 import createGiftPanel from '../giftPanel';
+import shuffle from '../utilities/shuffle';
 
 function createBestPanel(gifts) {
 
@@ -23,7 +24,8 @@ function createBestPanel(gifts) {
 
     containerGeneral.append(firstGeneralText, secondGeneralText, panelContainer);
 
-    const newPanels = gifts.slice(0, 4);
+    const arrShuffled = shuffle(gifts);
+    const newPanels = arrShuffled.slice(0, 4);
 
     newPanels.forEach(x => {
         createGiftPanel(x.category, x.name, panelContainer, '.')

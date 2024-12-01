@@ -36,11 +36,18 @@
     border: none;
     text-align: center;
     transition: 0.2s;
+
+    @media (hover:hover) {
+        &:hover {
+            background: var(--static-white-20);
+            cursor: pointer;
+        }
+    }
 }
 
-.tab:hover {
+.activeTab {
     background: var(--static-white-20);
-    cursor: pointer;
+    pointer-events: none;
 }
 
 .panelContainer {
