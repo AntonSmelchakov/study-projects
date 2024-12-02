@@ -1,9 +1,9 @@
 import styles from './index.module.css';
 import createButton from '../button';
 
-function createGreetPanel({ className, parent }) {
+function createGreetPanel() {
 
-    const greetPanel = document.createElement('article');
+    const greetPanel = document.querySelector('#greetPanel');
 
     const textContainer = document.createElement('div');
 
@@ -16,10 +16,6 @@ function createGreetPanel({ className, parent }) {
     second.textContent = 'Gift yourself the magic of new possibilities';
     fourth.textContent = 'and Happy New Year';
 
-    if (className) {
-        greetPanel.classList.add(className)
-    }
-
     greetPanel.classList.add(styles.container);
     textContainer.className = styles.textContainer;
     first.className = styles.fancyText;
@@ -27,8 +23,6 @@ function createGreetPanel({ className, parent }) {
     fourth.className = 'fancyText'
     textContainer.append(first, second, third, fourth);
     greetPanel.append(textContainer);
-
-    parent.append(greetPanel);
 }
 
 export default createGreetPanel;

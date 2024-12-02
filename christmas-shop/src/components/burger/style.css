@@ -1,0 +1,65 @@
+.burger {
+    display: flex;
+    visibility: hidden;
+    border: none;
+    background: transparent;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    z-index: 3;
+    right: 8px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+}
+
+.burgerBar {
+    width: 20px;
+    height: 2px;
+    background: var(--dark);
+
+    &:first-child {
+        animation: bar1anim 0.5s linear infinite alternate paused forwards;
+    }
+
+    &:last-child {
+        animation: bar2anim 0.5s linear infinite alternate paused forwards;
+    }
+}
+
+@keyframes bar1anim {
+    50% {
+        transform: translateY(4px);
+    }
+
+    100% {
+        transform: rotate(45deg) translateY(5.5px);
+    }
+}
+
+@keyframes bar2anim {
+    50% {
+        transform: translateY(-4px);
+    }
+
+    100% {
+        transform: rotate(-45deg) translateY(-5.5px);
+    }
+}
+
+@media (width <=768px) {
+    .list {
+        display: none;
+    }
+
+    .burger {
+        visibility: visible;
+    }
+}

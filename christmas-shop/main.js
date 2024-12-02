@@ -5,13 +5,21 @@ import createAboutPanel from './src/components/aboutPanel';
 import createSliderPanel from './src/components/sliderPanel';
 import createBestPanel from './src/components/bestPanel';
 import createTimerPanel from './src/components/timerPanel';
+import burgerFunc from './src/components/burger/script';
+import createBurgerMenu from './src/components/burgerMenu/script';
+import createModal from './src/components/modal/script';
 
 const gifts = await fetch('./json/gifts.json').then(resp => resp.json());
+let isClosed = true; let docWidth = window.innerWidth;
 
 const main = document.querySelector('main');
+const body = document.body;
 
-createGreetPanel({ className: 'greetPage', parent: main });
-createAboutPanel({ className: 'aboutPanel', parent: main });
-createSliderPanel({ className: 'sliderPanel', parent: main });
-createBestPanel({ className: 'bestPanel', parent: main, gifts: gifts });
-createTimerPanel({ className: 'timerPanel', parent: main });
+burgerFunc();
+createBurgerMenu(isClosed);
+createGreetPanel();
+createAboutPanel();
+createSliderPanel();
+createBestPanel(gifts);
+createTimerPanel();
+createModal(body);

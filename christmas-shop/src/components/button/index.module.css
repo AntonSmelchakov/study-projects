@@ -5,6 +5,10 @@
     text-transform: uppercase;
     margin: 0 auto;
     transition: 0.2s;
+
+    svg {
+        vertical-align: middle;
+    }
 }
 
 .button>a {
@@ -12,7 +16,9 @@
     padding: 20px 25px;
 }
 
-.button:hover {
-    background: var(--static-white);
-    color: var(--dark);
+@media (hover: hover) {
+    .button:hover {
+        background: var(--static-white);
+        color: var(--dark);
+    }
 }

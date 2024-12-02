@@ -1,0 +1,32 @@
+.list {
+    display: flex;
+    position: fixed;
+    right: -100%;
+    top: 0px;
+    transition: 0.5s;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: var(--static-white);
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 0 0 0;
+    margin: unset;
+
+    li {
+        height: auto;
+
+        a {
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 152%;
+            letter-spacing: 0.16em;
+            padding: 12px 20px;
+        }
+    }
+
+}
+
+.open {
+    right: 0px;
+}

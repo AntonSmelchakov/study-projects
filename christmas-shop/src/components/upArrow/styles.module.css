@@ -1,0 +1,25 @@
+.button {
+    visibility: hidden;
+    width: 56px;
+    height: 56px;
+    position: fixed;
+    left: auto;
+    right: 8px;
+    bottom: 8px;
+    padding: 0;
+    color: var(--primary);
+    background: var(--static-white);
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+
+    @media (width > 768px) {
+        display: none;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            cursor: pointer;
+            color: var(--primary);
+        }
+    }
+}

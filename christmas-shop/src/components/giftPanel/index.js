@@ -1,6 +1,7 @@
 import styles from './index.module.css';
+import { fillModal } from '../modal/script';
 
-function createGiftPanel(type, name, parent, level) {
+function createGiftPanel(obj, parent, level) {
     const newPanel = document.createElement('div');
     newPanel.classList.add(styles.panel);
     parent.append(newPanel);
@@ -14,8 +15,9 @@ function createGiftPanel(type, name, parent, level) {
     newPanel.append(newImage, textContainer);
 
     const typeText = document.createElement('h4');
-    typeText.textContent = type;
+    typeText.textContent = obj.category;
     typeText.classList.add(styles.typeText);
+    let type = obj.category;
 
     switch (type) {
         case 'For Harmony': typeText.classList.add(styles.harmony); newImage.src = level + '/img/gift-for-harmony.png'; break;
@@ -23,8 +25,16 @@ function createGiftPanel(type, name, parent, level) {
         case 'For Work': typeText.classList.add(styles.work); newImage.src = level + '/img/gift-for-work.png'; break;
     }
 
+    newPanel.addEventListener('click', () => {
+        fillModal(obj, level);
+        let shadow = document.querySelector('body>div');
+        let body = document.querySelector('body');
+        shadow.style.display = 'flex';
+        body.style['overflow-y'] = 'hidden';
+    })
+
     const nameText = document.createElement('h3');
-    nameText.textContent = name;
+    nameText.textContent = obj.name;
 
     textContainer.append(typeText, nameText);
 }

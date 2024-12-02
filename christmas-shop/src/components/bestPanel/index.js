@@ -1,10 +1,10 @@
 import styles from './index.module.css';
 import createGiftPanel from '../giftPanel';
+import shuffle from '../utilities/shuffle';
 
-function createBestPanel({ className, parent, gifts }) {
+function createBestPanel(gifts) {
 
-    const bestPanel = document.createElement('article');
-    bestPanel.id = 'bestPanel';
+    const bestPanel = document.querySelector('#bestPanel');
     bestPanel.classList.add(styles.container);
 
     const containerGeneral = document.createElement('div');
@@ -24,17 +24,12 @@ function createBestPanel({ className, parent, gifts }) {
 
     containerGeneral.append(firstGeneralText, secondGeneralText, panelContainer);
 
-    const newPanels = gifts.slice(0, 4);
+    const arrShuffled = shuffle(gifts);
+    const newPanels = arrShuffled.slice(0, 4);
 
     newPanels.forEach(x => {
-        createGiftPanel(x.category, x.name, panelContainer, '.')
+        createGiftPanel(x, panelContainer, '.')
     })
-
-    if (className) {
-        bestPanel.classList.add(className);
-    }
-
-    parent.append(bestPanel);
 
 }
 

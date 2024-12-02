@@ -1,8 +1,8 @@
 import styles from './index.module.css';
 
-function createAboutPanel({ className, parent }) {
+function createAboutPanel() {
 
-    const aboutPanel = document.createElement('article');
+    const aboutPanel = document.querySelector('#aboutPanel');
     aboutPanel.id = 'aboutPanel';
 
     const containerGeneral = document.createElement('div');
@@ -30,12 +30,6 @@ function createAboutPanel({ className, parent }) {
     textContainer.append(first, second, third);
     containerGeneral.append(textContainer, imageOne)
     aboutPanel.append(containerGeneral);
-
-    if (className) {
-        aboutPanel.classList.add(className);
-    }
-
-    parent.append(aboutPanel);
 }
 
 export default createAboutPanel;
