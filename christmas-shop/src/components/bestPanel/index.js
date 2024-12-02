@@ -28,7 +28,7 @@ function createBestPanel(gifts) {
     const newPanels = arrShuffled.slice(0, 4);
 
     newPanels.forEach(x => {
-        createGiftPanel(x.category, x.name, panelContainer, '.')
+        createGiftPanel(x, panelContainer, '.')
     })
 
 }

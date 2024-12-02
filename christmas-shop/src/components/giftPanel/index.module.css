@@ -20,7 +20,7 @@
 .textContainer {
     border-radius: inherit;
     background: var(--static-white);
-    padding: 20px 0 0 19px;
+    padding: 20px;
     flex: 1 0;
 }
 

@@ -36,7 +36,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
                 tab.classList.add(styles.activeTab);
                 tab.onclick = () => {
                     panelContainer.innerHTML = '';
-                    allPanels.forEach(x => createGiftPanel(x.category, x.name, panelContainer, '..'));
+                    allPanels.forEach(x => createGiftPanel(x, panelContainer, '..'));
                     let activeTab = tabsPanel.querySelector(`.${styles.activeTab}`);
                     activeTab.classList.remove(styles.activeTab);
                     tab.classList.add(styles.activeTab);
@@ -47,7 +47,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
                 tab.textContent = 'for work';
                 tab.onclick = () => {
                     panelContainer.innerHTML = '';
-                    workPanels.forEach(x => createGiftPanel(x.category, x.name, panelContainer, '..'));
+                    workPanels.forEach(x => createGiftPanel(x, panelContainer, '..'));
                     let activeTab = tabsPanel.querySelector(`.${styles.activeTab}`);
                     activeTab.classList.remove(styles.activeTab);
                     tab.classList.add(styles.activeTab);
@@ -58,7 +58,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
                 tab.textContent = 'for health';
                 tab.onclick = () => {
                     panelContainer.innerHTML = '';
-                    healthPanels.forEach(x => createGiftPanel(x.category, x.name, panelContainer, '..'));
+                    healthPanels.forEach(x => createGiftPanel(x, panelContainer, '..'));
                     let activeTab = tabsPanel.querySelector(`.${styles.activeTab}`);
                     activeTab.classList.remove(styles.activeTab);
                     tab.classList.add(styles.activeTab);
@@ -69,7 +69,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
                 tab.textContent = 'for harmony';
                 tab.onclick = () => {
                     panelContainer.innerHTML = '';
-                    harmonyPanels.forEach(x => createGiftPanel(x.category, x.name, panelContainer, '..'));
+                    harmonyPanels.forEach(x => createGiftPanel(x, panelContainer, '..'));
                     let activeTab = tabsPanel.querySelector(`.${styles.activeTab}`);
                     activeTab.classList.remove(styles.activeTab);
                     tab.classList.add(styles.activeTab);
@@ -84,7 +84,7 @@ function createMainGiftsPanel({ className, parent, gifts }) {
 
 
     allPanels.forEach(x => {
-        createGiftPanel(x.category, x.name, panelContainer, '..')
+        createGiftPanel(x, panelContainer, '..')
     })
 
     if (className) {

@@ -1,0 +1,122 @@
+.shadow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: var(--overlay);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.mainContainer {
+    position: relative;
+    background: var(--content-background);
+    border-radius: 20px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 8px;
+
+    h5 {
+        margin-top: 12px;
+    }
+
+    &>div {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        background: var(--static-white);
+        border-radius: inherit;
+        gap: 8px;
+
+        p {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 148%;
+        }
+    }
+}
+
+.closeBtn {
+    position: absolute;
+    background: transparent;
+    border: transparent;
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+
+    @media (hover:hover) {
+        cursor: pointer;
+    }
+}
+
+.bar {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--dark);
+
+    &:first-child {
+        transform: rotate(45deg) translate(3px, 3px)
+    }
+
+    &:last-child {
+        transform: rotate(-45deg) translate(3px, -3px)
+    }
+}
+
+.newImage {
+    height: 230px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 96px;
+    align-content: space-between;
+
+    div {
+        display: flex;
+        height: 24px;
+        min-width: 164px;
+        line-height: 24px;
+        gap: 8px;
+        align-items: center;
+    }
+
+    img {
+        width: 16px;
+        height: 16px;
+    }
+
+    span {
+        letter-spacing: 0.05em;
+        margin-right: 5px;
+    }
+}
+
+.harmony {
+    color: var(--tag-pink);
+}
+
+.health {
+    color: var(--tag-green);
+}
+
+.work {
+    color: var(--tag-purple);
+}
