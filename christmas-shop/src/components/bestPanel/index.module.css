@@ -1,10 +1,11 @@
-.container {
+:global(.bestPanel) {
     width: 100%;
     background: center / cover url('/img/bg-snow.png');
     color: var(--static-white);
     border-radius: inherit;
     padding: 58px 68px;
     transition: 0.5s;
+    /*     min-height: 433px; */
 }
 
 .containerGeneral {

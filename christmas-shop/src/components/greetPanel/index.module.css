@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     color: var(--static-white);
-    min-height: 524px;
+    /*     min-height: 524px; */
 }
 
 .textContainer {

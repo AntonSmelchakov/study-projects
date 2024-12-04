@@ -23,3 +23,10 @@ createSliderPanel();
 createBestPanel(gifts);
 createTimerPanel();
 createModal(body);
+
+let mainLink = location.href
+let hashLink = mainLink.slice(mainLink.indexOf('#'));
+if (hashLink) {
+    setTimeout(() => document.querySelector(hashLink).scrollIntoView(true), 500);
+
+}

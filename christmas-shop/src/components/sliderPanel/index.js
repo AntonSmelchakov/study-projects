@@ -64,7 +64,8 @@ function createSliderPanel() {
         sliderMovementsNum = 6;
         paddingOffset = 8;
     }
-    let endOfSliderVal = (sliderContainer.offsetWidth + paddingOffset * 2) - docWidth;
+    let elemWidth = parseInt(window.getComputedStyle(sliderPanel).getPropertyValue('width'));
+    let endOfSliderVal = (sliderContainer.offsetWidth + paddingOffset * 2) - elemWidth;
     let slideVal = Math.ceil(endOfSliderVal / sliderMovementsNum);
 
     window.addEventListener('resize', () => {
@@ -78,7 +79,8 @@ function createSliderPanel() {
             paddingOffset = 8;
         }
         sliderPosition = 0;
-        endOfSliderVal = (sliderContainer.offsetWidth + paddingOffset * 2) - docWidth;
+        elemWidth = parseInt(window.getComputedStyle(sliderPanel).getPropertyValue('width'));
+        endOfSliderVal = (sliderContainer.offsetWidth + paddingOffset * 2) - elemWidth;
         slideVal = Math.ceil(endOfSliderVal / sliderMovementsNum);
         sliderContainer.style.left = `0px`
         btnLeft.classList.add(styles.inactiveButton);

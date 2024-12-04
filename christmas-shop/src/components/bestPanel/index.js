@@ -4,7 +4,8 @@ import shuffle from '../utilities/shuffle';
 
 function createBestPanel(gifts) {
 
-    const bestPanel = document.querySelector('#bestPanel');
+    const bestPanel = document.querySelector('.bestPanel');
+    bestPanel.id = 'bestPanel';
     bestPanel.classList.add(styles.container);
 
     const containerGeneral = document.createElement('div');
