@@ -7,7 +7,6 @@ export function fillModal(obj, level) {
   const giftName = modal.querySelector('h3');
   const description = modal.querySelector('p');
   const statFields = modal.querySelectorAll(`.${style.stats} div`);
-  console.log(statFields);
 
   const type = obj.category;
   switch (type) {
@@ -58,12 +57,20 @@ export default function createModal(parent) {
     `;
 
   const closeBtn = document.querySelector('.modal button');
-  console.log(closeBtn);
+  const shadow = document.querySelector(`.${style.shadow}`)
+  let body = document.body;
   closeBtn.onclick = () => {
-    let body = document.body;
-    let shadow = document.querySelector('body>div');
     body.style['overflow-y'] = 'scroll';
     shadow.style.display = 'none';
   }
+
+  shadow.onclick = (x) => {
+    if (x.target === x.currentTarget) {
+      body.style['overflow-y'] = 'scroll';
+      shadow.style.display = 'none';
+    }
+  }
+
+
 
 }

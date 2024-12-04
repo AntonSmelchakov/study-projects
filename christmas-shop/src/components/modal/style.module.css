@@ -13,6 +13,7 @@
 
 .mainContainer {
     position: relative;
+    z-index: 5;
     background: var(--content-background);
     border-radius: 20px;
     max-width: 400px;

@@ -5,7 +5,7 @@ function createTimer() {
     generalContainer.classList.add(styles.generalContainer);
 
     const now = new Date();
-    const newYear = Date.UTC(2025, 0, 0, 0, 0, 0);
+    const newYear = Date.UTC(2025, 0, 1, 0, 0, 0);
     let count = now.getTime();
     let timeLeft = (newYear - count) / 1000;
     let secondsVal = Math.trunc(timeLeft % 60);
