@@ -70,8 +70,39 @@ header {
   border-radius: 4px;
   color: var(--first-item-color);
   font-size: utopia.clamp(20, 80);
+  animation: itemReactionGood 0.5s linear 0.1s infinite paused;
+}
+
+.itemResult {
+  height: utopia.clamp(50, 130);
+  width: utopia.clamp(50, 130);
+  border: 2px solid var(--first-item-color);
+  border-radius: 4px;
+  color: var(--first-item-color);
+  font-size: utopia.clamp(20, 80);
+  animation: itemReactionGood 0.5s linear 0.1s infinite paused;
 }
 
 .inactive {
   pointer-events: none;
+}
+
+@keyframes itemReactionGood {
+  20% {
+    background: rgba(0, 128, 0, 1);
+  }
+
+  100% {
+    background: rgba(0, 128, 0, 0);
+  }
+}
+
+@keyframes itemReactionBad {
+  20% {
+    background: rgba(128, 0, 0, 1);
+  }
+
+  100% {
+    background: rgba(128, 0, 0, 0);
+  }
 }

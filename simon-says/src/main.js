@@ -1,6 +1,8 @@
 import '../node_modules/modern-normalize/modern-normalize.css';
 import './style.css';
 
+let gameParams = { diff: 'easy', roundCount: 1, repeatUsed: false, sequence: [] };
+
 function clearHtml(clearTarget) {
   console.log(clearTarget.firstChild);
   while (clearTarget.firstChild) {
@@ -16,6 +18,10 @@ function createHeader() {
   const repeatBtn = document.createElement('button');
   repeatBtn.textContent = 'Repeat the sequence';
   repeatBtn.classList.add('repeatBtn', 'inactive');
+  repeatBtn.addEventListener('click', () => {
+    repeatBtn.classList.add('repeatBtn', 'inactive');
+    playSequence(gameParams.sequence, true);
+  });
   /* repeatBtn end */
   /* startBtn start */
   const startBtn = document.createElement('button');
@@ -34,6 +40,7 @@ function createHeader() {
   }
   difficultySelect.addEventListener('input', () => {
     const virtualKB = document.querySelector('.virtualKB');
+    gameParams.diff = difficultySelect.value;
     clearHtml(virtualKB);
     generateKB(difficultySelect.value);
   });
@@ -59,10 +66,15 @@ function createMain() {
   main.append(roundPanel, result, virtualKB);
 }
 
-function createItem(text) {
+function createItem(text, isKb) {
   const item = document.createElement('div');
-  item.classList.add('item');
   item.textContent = text;
+  if (isKb) {
+    item.id = text;
+    item.classList.add('item');
+  } else {
+    item.classList.add('itemResult');
+  }
   return item;
 }
 
@@ -80,7 +92,7 @@ function generateKB(diff) {
   let res = generateDiffArray(diff);
   const virtualKB = document.querySelector('.virtualKB');
   res.forEach((x) => {
-    virtualKB.append(createItem(x));
+    virtualKB.append(createItem(x, true));
   });
 }
 
@@ -94,36 +106,45 @@ function generateSequence(diff, roundCount) {
   return res;
 }
 
-async function animationEnd(item) {
-  return new Promise((resolve) => (item.animationEnd = resolve));
+async function animationEnd(item, lockRepeat) {
+  return new Promise((resolve) => (item.onanimationiteration = resolve));
 }
 
-async function animateItem(style) {}
+async function playSequence(seq, lockRepeat) {
+  let res = [];
+  let i = 0;
+  document.body.classList.add('inactive');
 
-function playSequence(seq) {}
+  while (i < seq.length) {
+    let item = document.getElementById(seq[i]);
+    console.log(item);
+    item.style['animation-play-state'] = 'running';
+    await animationEnd(item);
+    item.style['animation-play-state'] = 'paused';
+    ++i;
+  }
+  const repeatBtn = document.querySelector('.repeatBtn');
+  if (lockRepeat) repeatBtn.classList.add('inactive');
+  else repeatBtn.classList.remove('inactive');
+  document.body.classList.remove('inactive');
+}
 
 function mainGameFlow() {
-  let roundCount = 1;
-  let diff = document.querySelector('select').value;
-  let sequence = [];
-
-  const difficultySelect = document.querySelector('select');
-  difficultySelect.addEventListener('click', () => {
-    diff = document.querySelector('select').value;
-  });
-
   const startBtn = document.querySelector('.startBtn');
   const roundPanel = document.querySelector('.roundPanel');
+  const repeatBtn = document.querySelector('.repeatBtn');
 
   startBtn.addEventListener('click', () => {
-    sequence = generateSequence(diff, roundCount);
-    roundPanel.textContent = `Round ${roundCount}`;
-    console.log(sequence);
-    ++roundCount;
+    repeatBtn.classList.add('inactive');
+    gameParams.sequence = generateSequence(gameParams.diff, gameParams.roundCount);
+    console.log(gameParams.sequence);
+    roundPanel.textContent = `Round ${gameParams.roundCount}`;
+    playSequence(gameParams.sequence, false);
+    gameParams.roundCount += 1;
   });
 }
 
 createHeader();
 createMain();
-generateKB(document.querySelector('select').value);
+generateKB(gameParams.diff);
 mainGameFlow();
