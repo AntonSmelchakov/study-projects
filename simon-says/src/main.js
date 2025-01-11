@@ -12,7 +12,6 @@ let gameParams = {
 let elementList = {};
 
 function clearHtml(clearTarget) {
-  console.log(clearTarget.firstChild);
   while (clearTarget.firstChild) {
     clearTarget.lastChild.remove();
   }
@@ -35,6 +34,7 @@ function createHeader() {
       clearHtml(elementList.result);
       playSequence(gameParams.sequence, false);
       gameParams.isMistakeOne = false;
+      gameParams.roundWon = false;
     } else {
       repeatBtn.classList.add('repeatBtn', 'inactive');
       playSequence(gameParams.sequence, true);
@@ -173,12 +173,11 @@ async function animationEnd(item) {
 async function playSequence(seq, lockRepeat) {
   console.log(gameParams.sequence);
   let i = 0;
-  document.body.classList.add('inactive');
+  document.body.classList.add('inactiveBody');
   keysEnabled(false);
 
   while (i < seq.length) {
     let item = document.getElementById(seq[i]);
-    console.log(item);
     item.style['animation-name'] = 'itemReactionGood';
     item.style['animation-play-state'] = 'running';
     await animationEnd(item);
@@ -186,7 +185,7 @@ async function playSequence(seq, lockRepeat) {
   }
   if (lockRepeat) elementList.repeatBtn.classList.add('inactive');
   else elementList.repeatBtn.classList.remove('inactive');
-  document.body.classList.remove('inactive');
+  document.body.classList.remove('inactiveBody');
   keysEnabled(true);
   elementList.virtualKB.classList.remove('inactive');
 }
@@ -204,7 +203,8 @@ function resultHandler(isRight) {
     } else {
       elementList.roundPanel.textContent =
         'Great job! When ready for the next round press "Next round"';
-      elementList.repeatBtn.textContent = 'Next';
+      elementList.repeatBtn.textContent = 'Next round';
+      elementList.repeatBtn.classList.remove('inactive');
     }
     keysEnabled(false);
     elementList.virtualKB.classList.add('inactive');
@@ -219,6 +219,7 @@ function resultHandler(isRight) {
 }
 
 function newGameInit() {
+  clearHtml(elementList.result);
   elementList.virtualKB.classList.add('inactive');
   elementList.difficultySelect.classList.remove('inactive');
   keysEnabled(false);

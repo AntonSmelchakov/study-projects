@@ -41,6 +41,10 @@ header {
   }
 }
 
+button {
+  border: 1px solid;
+}
+
 .roundPanel {
   position: absolute;
   width: 100%;
@@ -91,6 +95,13 @@ header {
 }
 
 .inactive {
+  pointer-events: none;
+  border-color: gray;
+  background-color: transparent;
+  color: gray;
+}
+
+.inactiveBody {
   pointer-events: none;
 }
 
