@@ -222,6 +222,7 @@ function newGameInit() {
   clearHtml(elementList.result);
   elementList.virtualKB.classList.add('inactive');
   elementList.difficultySelect.classList.remove('inactive');
+  elementList.repeatBtn.classList.add('inactive');
   keysEnabled(false);
   gameParams.roundCount = 0;
   gameParams.isNoActiveGame = true;
