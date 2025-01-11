@@ -1,7 +1,15 @@
 import '../node_modules/modern-normalize/modern-normalize.css';
 import './style.css';
 
-let gameParams = { diff: 'easy', roundCount: 1, repeatUsed: false, sequence: [] };
+let gameParams = {
+  diff: 'easy',
+  roundCount: 0,
+  isNoActiveGame: true,
+  sequence: [],
+  isMistakeOne: false,
+  roundWon: false,
+};
+let elementList = {};
 
 function clearHtml(clearTarget) {
   console.log(clearTarget.firstChild);
@@ -19,8 +27,18 @@ function createHeader() {
   repeatBtn.textContent = 'Repeat the sequence';
   repeatBtn.classList.add('repeatBtn', 'inactive');
   repeatBtn.addEventListener('click', () => {
-    repeatBtn.classList.add('repeatBtn', 'inactive');
-    playSequence(gameParams.sequence, true);
+    if (gameParams.roundWon) {
+      gameParams.roundCount += 1;
+      gameParams.sequence = generateSequence(gameParams.diff, gameParams.roundCount);
+      repeatBtn.textContent = 'Repeat the sequence';
+      elementList.roundPanel.textContent = `Round ${gameParams.roundCount}`;
+      clearHtml(elementList.result);
+      playSequence(gameParams.sequence, false);
+      gameParams.isMistakeOne = false;
+    } else {
+      repeatBtn.classList.add('repeatBtn', 'inactive');
+      playSequence(gameParams.sequence, true);
+    }
   });
   /* repeatBtn end */
   /* startBtn start */
@@ -55,7 +73,7 @@ function createMain() {
 
   const roundPanel = document.createElement('div');
   roundPanel.classList.add('roundPanel');
-  roundPanel.textContent = 'Round 1';
+  roundPanel.textContent = `Select difficulty setting and press "Start"`;
 
   const result = document.createElement('div');
   result.classList.add('result');
@@ -76,30 +94,29 @@ function createMain() {
 }
 
 async function pressRegister(item) {
-  const result = document.querySelector('.result');
-  const virtualKB = document.querySelector('.virtualKB');
   let i = document.querySelectorAll('.itemResult').length;
   if (item.textContent === gameParams.sequence[i]) {
     item.style['animation-name'] = 'itemReactionGood';
     item.style['animation-play-state'] = 'running';
-    keysSwitch(false);
+    keysEnabled(false);
     await animationEnd(item);
     let newEntry = createItem(item.textContent, false);
-    keysSwitch(true);
-    result.append(newEntry);
+    keysEnabled(true);
+    elementList.result.append(newEntry);
+    if (++i === gameParams.sequence.length) resultHandler(true);
   } else {
     item.style['animation-name'] = 'itemReactionBad';
     item.style['animation-play-state'] = 'running';
-    keysSwitch(false);
+    keysEnabled(false);
+    resultHandler(false);
     await animationEnd(item);
-    keysSwitch(true);
-    clearHtml(result);
-    virtualKB.classList.add('inactive');
+    clearHtml(elementList.result);
+    keysEnabled(true);
   }
 }
 
 async function keyPressHandler(ev) {
-  let key = document.getElementById(ev.code.slice(-1));
+  let key = document.getElementById(ev.key);
   if (key) {
     pressRegister(key);
   }
@@ -154,10 +171,10 @@ async function animationEnd(item) {
 }
 
 async function playSequence(seq, lockRepeat) {
-  let res = [];
+  console.log(gameParams.sequence);
   let i = 0;
   document.body.classList.add('inactive');
-  keysSwitch(false);
+  keysEnabled(false);
 
   while (i < seq.length) {
     let item = document.getElementById(seq[i]);
@@ -167,38 +184,82 @@ async function playSequence(seq, lockRepeat) {
     await animationEnd(item);
     ++i;
   }
-  const repeatBtn = document.querySelector('.repeatBtn');
-  if (lockRepeat) repeatBtn.classList.add('inactive');
-  else repeatBtn.classList.remove('inactive');
+  if (lockRepeat) elementList.repeatBtn.classList.add('inactive');
+  else elementList.repeatBtn.classList.remove('inactive');
   document.body.classList.remove('inactive');
-  keysSwitch(true);
+  keysEnabled(true);
+  elementList.virtualKB.classList.remove('inactive');
 }
 
-function keysSwitch(enable) {
+function keysEnabled(enable) {
   if (enable) window.addEventListener('keydown', keyPressHandler);
   else window.removeEventListener('keydown', keyPressHandler);
 }
 
-function mainGameFlow() {
-  const startBtn = document.querySelector('.startBtn');
-  const roundPanel = document.querySelector('.roundPanel');
-  const repeatBtn = document.querySelector('.repeatBtn');
-  const difficultySelect = document.querySelector('select');
-  const virtualKB = document.querySelector('.virtualKB');
+function resultHandler(isRight) {
+  if (isRight) {
+    if (gameParams.roundCount === 5) {
+      elementList.roundPanel.textContent = '!!!YOU WON!!! \n take a walk as a reward';
+      elementList.repeatBtn.classList.add('inactive');
+    } else {
+      elementList.roundPanel.textContent =
+        'Great job! When ready for the next round press "Next round"';
+      elementList.repeatBtn.textContent = 'Next';
+    }
+    keysEnabled(false);
+    elementList.virtualKB.classList.add('inactive');
+    gameParams.roundWon = true;
+  } else {
+    if (gameParams.isMistakeOne) newGameInit();
+    else {
+      gameParams.isMistakeOne = true;
+      elementList.roundPanel.textContent = `${elementList.roundPanel.textContent} \n Watch out! One more mistake and you'll have to start over!`;
+    }
+  }
+}
 
-  startBtn.addEventListener('click', () => {
-    repeatBtn.classList.add('inactive');
-    difficultySelect.classList.add('inactive');
-    gameParams.sequence = generateSequence(gameParams.diff, gameParams.roundCount);
+function newGameInit() {
+  elementList.virtualKB.classList.add('inactive');
+  elementList.difficultySelect.classList.remove('inactive');
+  keysEnabled(false);
+  gameParams.roundCount = 0;
+  gameParams.isNoActiveGame = true;
+  gameParams.isMistakeOne = false;
+  elementList.startBtn.textContent = 'Start';
+  elementList.roundPanel.textContent = `Select difficulty setting and press "Start"`;
+  elementList.repeatBtn.textContent = 'Repeat the sequence';
+}
+
+function generateElementList() {
+  elementList.startBtn = document.querySelector('.startBtn');
+  elementList.roundPanel = document.querySelector('.roundPanel');
+  elementList.repeatBtn = document.querySelector('.repeatBtn');
+  elementList.difficultySelect = document.querySelector('select');
+  elementList.virtualKB = document.querySelector('.virtualKB');
+  elementList.result = document.querySelector('.result');
+}
+
+function mainGameFlow() {
+  elementList.startBtn.addEventListener('click', () => {
+    if (gameParams.isNoActiveGame) {
+      elementList.startBtn.textContent = 'New Game';
+      elementList.repeatBtn.classList.add('inactive');
+      elementList.difficultySelect.classList.add('inactive');
+      gameParams.roundCount += 1;
+      gameParams.sequence = generateSequence(gameParams.diff, gameParams.roundCount);
+      elementList.roundPanel.textContent = `Round ${gameParams.roundCount}`;
+      playSequence(gameParams.sequence, false);
+      elementList.virtualKB.classList.remove('inactive');
+      gameParams.isNoActiveGame = false;
+    } else {
+      newGameInit();
+    }
     console.log(gameParams.sequence);
-    roundPanel.textContent = `Round ${gameParams.roundCount}`;
-    playSequence(gameParams.sequence, false);
-    virtualKB.classList.remove('inactive');
-    gameParams.roundCount += 1;
   });
 }
 
 createHeader();
 createMain();
 generateKB(gameParams.diff);
+generateElementList();
 mainGameFlow();

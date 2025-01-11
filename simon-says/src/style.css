@@ -42,14 +42,17 @@ header {
 }
 
 .roundPanel {
+  position: absolute;
+  width: 100%;
   padding: 10px;
   background-color: var(--third-bg-color);
   color: var(--first-item-color);
+  white-space: pre-wrap;
 }
 
 .result {
   background: var(--secondary-bg-color);
-  height: 20vh;
+  height: 25vh;
 }
 
 .virtualKB {
