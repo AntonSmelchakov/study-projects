@@ -322,7 +322,7 @@ button {
   }
 
   100% {
-    background: rgba(0, 128, 0, 0);
+    background: transparent;
   }
 }
 
@@ -332,6 +332,6 @@ button {
   }
 
   100% {
-    background: rgba(128, 0, 0, 0);
+    background: transparent;
   }
 }
