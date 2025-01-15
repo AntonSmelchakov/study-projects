@@ -11,5 +11,6 @@ export default defineConfig({
     },
     target: 'esnext',
     outDir: './build',
+    minify: false,
   },
 });

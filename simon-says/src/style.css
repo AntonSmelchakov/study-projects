@@ -77,7 +77,7 @@ button {
   border-radius: 4px;
   color: var(--first-item-color);
   font-size: utopia.clamp(20, 80);
-  animation: itemReactionGood 0.5s linear 0.1s infinite paused;
+  animation: itemReactionGood 0.5s linear 0.1s infinite paused forwards;
 
   &:hover {
     cursor: pointer;
@@ -91,7 +91,7 @@ button {
   border-radius: 4px;
   color: var(--first-item-color);
   font-size: utopia.clamp(20, 80);
-  animation: itemReactionGood 0.5s linear 0.1s infinite paused;
+  animation: itemReactionGood 0.5s linear 0.1s infinite paused forwards;
 }
 
 .inactive {
