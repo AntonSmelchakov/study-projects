@@ -98,23 +98,22 @@ function createMain() {
 
 async function pressRegister(item) {
   let i = document.querySelectorAll('.itemResult').length;
+  keysEnabled(false);
+  elementList.virtualKB.classList.add('inactive');
   if (item.textContent === gameParams.sequence[i]) {
-    item.style['animation-name'] = 'itemReactionGood';
-    item.style['animation-play-state'] = 'running';
-    keysEnabled(false);
+    item.classList.add('goodReaction');
     await animationEnd(item);
     let newEntry = createItem(item.textContent, false);
     keysEnabled(true);
     elementList.result.append(newEntry);
     if (++i === gameParams.sequence.length) resultHandler(true);
   } else {
-    item.style['animation-name'] = 'itemReactionBad';
-    item.style['animation-play-state'] = 'running';
-    keysEnabled(false);
+    item.classList.add('badReaction');
     resultHandler(false);
     await animationEnd(item);
     clearHtml(elementList.result);
   }
+  elementList.virtualKB.classList.remove('inactive');
 }
 
 async function keyPressHandler(ev) {
@@ -126,10 +125,10 @@ async function keyPressHandler(ev) {
 
 function createItem(text, isKb) {
   const item = document.createElement('div');
-  item.addEventListener(
-    'animationiteration',
-    () => (item.style['animation-play-state'] = 'paused'),
-  );
+  item.addEventListener('animationend', () => {
+    item.classList.remove('badReaction');
+    item.classList.remove('goodReaction');
+  });
   item.textContent = text;
   if (isKb) {
     item.id = text;
@@ -169,7 +168,7 @@ function generateSequence(diff, roundCount) {
 }
 
 async function animationEnd(item) {
-  return new Promise((resolve) => (item.onanimationiteration = resolve));
+  return new Promise((resolve) => (item.onanimationend = resolve));
 }
 
 async function playSequence(seq, lockRepeat) {
@@ -180,9 +179,9 @@ async function playSequence(seq, lockRepeat) {
 
   while (i < seq.length) {
     let item = document.getElementById(seq[i]);
-    item.style['animation-name'] = 'itemReactionGood';
-    item.style['animation-play-state'] = 'running';
+    item.classList.add('goodReaction');
     await animationEnd(item);
+    console.log('good');
     ++i;
   }
   if (lockRepeat) elementList.repeatBtn.classList.add('inactive');
