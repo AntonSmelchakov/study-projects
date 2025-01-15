@@ -252,6 +252,8 @@ function generateElementList() {
 }
 
 function mainGameFlow() {
+  keysEnabled(false);
+  elementList.virtualKB.classList.add('inactive');
   elementList.startBtn.addEventListener('click', () => {
     if (gameParams.isNoActiveGame) {
       elementList.startBtn.textContent = 'New Game';
