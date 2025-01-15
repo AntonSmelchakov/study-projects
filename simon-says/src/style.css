@@ -106,21 +106,29 @@ button {
 }
 
 @keyframes itemReactionGood {
+  0% {
+    background: rgba(0, 128, 0, 0);
+  }
+
   20% {
     background: rgba(0, 128, 0, 1);
   }
 
   100% {
-    background: transparent;
+    background: rgba(0, 128, 0, 0);
   }
 }
 
 @keyframes itemReactionBad {
+  0% {
+    background: rgba(128, 0, 0, 0);
+  }
+
   20% {
     background: rgba(128, 0, 0, 1);
   }
 
   100% {
-    background: transparent;
+    background: rgba(128, 0, 0, 0);
   }
 }
