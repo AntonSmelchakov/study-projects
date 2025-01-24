@@ -1,0 +1,69 @@
+:root {
+  --main-bg-color: #c7ba83;
+  --secondary-bg-color: #587199;
+  --third-bg-color: #50555c;
+  --box-bg-color-light: #fff;
+  --border-color-light: black;
+}
+
+* {
+  text-align: center;
+  margin: unset;
+}
+
+body {
+  height: 100vh;
+  background: var(--main-bg-color);
+}
+
+div,
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+}
+
+.box {
+  width: 80%;
+  aspect-ratio: 1/1;
+  background: var(--border-color-light);
+  border: 3px solid var(--border-color-light);
+  display: grid;
+  grid: repeat(5, 1fr) / repeat(5, 1fr);
+  anchor-name: --box;
+}
+
+.boxItem {
+  width: 100%;
+  height: 100%;
+  background: var(--box-bg-color-light);
+  border: 0.1px solid var(--border-color-light);
+
+  &:nth-of-type(5n) {
+    border-right: 3px solid var(--border-color-light);
+  }
+}
+
+.bottomBorder {
+  border-bottom: 3px solid var(--border-color-light);
+}
+
+.vHints {
+  position: fixed;
+  position-anchor: --box;
+  width: anchor-size(100%);
+  position-area: block-start;
+  border-bottom: 3px solid var(--border-color-light);
+}
+.hHints {
+  position: fixed;
+  position-anchor: --box;
+  height: anchor-size(100%);
+  position-area: left;
+  border-right: 3px solid var(--border-color-light);
+}
