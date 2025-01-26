@@ -4,6 +4,8 @@
   --third-bg-color: #50555c;
   --box-bg-color-light: #fff;
   --border-color-light: black;
+  --border-thick: 3px;
+  --border-thin: 1px;
 }
 
 * {
@@ -32,7 +34,7 @@ main {
   width: 80%;
   aspect-ratio: 1/1;
   background: var(--border-color-light);
-  border: 3px solid var(--border-color-light);
+  border: var(--border-thick) solid var(--border-color-light);
   display: grid;
   grid: repeat(5, 1fr) / repeat(5, 1fr);
   anchor-name: --box;
@@ -42,28 +44,83 @@ main {
   width: 100%;
   height: 100%;
   background: var(--box-bg-color-light);
-  border: 0.1px solid var(--border-color-light);
+  border: var(--border-thin) solid var(--border-color-light);
 
   &:nth-of-type(5n) {
-    border-right: 3px solid var(--border-color-light);
+    border-right: var(--border-thick) solid var(--border-color-light);
   }
 }
 
 .bottomBorder {
-  border-bottom: 3px solid var(--border-color-light);
+  border-bottom: var(--border-thick) solid var(--border-color-light);
 }
 
 .vHints {
+  display: grid;
+  width: anchor-size(100%);
+  height: max-content;
   position: fixed;
   position-anchor: --box;
-  width: anchor-size(100%);
   position-area: block-start;
-  border-bottom: 3px solid var(--border-color-light);
+  border: var(--border-thick) solid var(--border-color-light);
+  border-top: none;
+
+  .vhItem {
+    flex-direction: column;
+    border-right: var(--border-thin) solid var(--border-color-light);
+    border-left: var(--border-thin) solid var(--border-color-light);
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+
+    &:nth-of-type(5n) {
+      border-right: var(--border-thick) solid var(--border-color-light);
+    }
+  }
 }
 .hHints {
+  display: grid;
+  width: max-content;
   position: fixed;
   position-anchor: --box;
   height: anchor-size(100%);
   position-area: left;
-  border-right: 3px solid var(--border-color-light);
+  border: var(--border-thick) solid var(--border-color-light);
+  border-left: none;
+
+  .hhItem {
+    border-bottom: var(--border-thin) solid var(--border-color-light);
+    border-top: var(--border-thin) solid var(--border-color-light);
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+
+    &:nth-of-type(5n) {
+      border-bottom: var(--border-thick) solid var(--border-color-light);
+    }
+  }
+}
+
+.checked {
+  background: black;
+}
+
+.ignored {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    background: black;
+    width: 142%;
+    height: 2px;
+    transform: rotate(45deg);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: black;
+    width: 142%;
+    height: 2px;
+    transform: rotate(-45deg);
+  }
 }

@@ -1,30 +1,22 @@
 import '../node_modules/modern-normalize/modern-normalize.css';
 import './style.css';
 
-const gameSettings = { difficulty: 15 };
+const gameSettings = { difficulty: 5 };
 const elemList = {};
 
-function createBoxItems(num) {
-  for (let i = 0; i < num * num; ++i) {
+function createBoxItems(num, itemClass, appendTarget) {
+  let maxIter = itemClass === 'boxItem' ? num * num : num;
+  for (let i = 0; i < maxIter; ++i) {
     let boxItem = document.createElement('div');
-    boxItem.classList.add('boxItem');
-    let fiveCheck = (i + gameSettings.difficulty) % (gameSettings.difficulty * 5);
-    console.log(fiveCheck);
-    if (i > 30 && fiveCheck >= 0 && fiveCheck < gameSettings.difficulty) {
-      console.log(fiveCheck);
-      boxItem.classList.add('bottomBorder');
+    boxItem.classList.add(itemClass);
+    if (itemClass === 'boxItem') {
+      let fiveCheck = (i + gameSettings.difficulty) % (gameSettings.difficulty * 5);
+      if (i > 30 && fiveCheck >= 0 && fiveCheck < gameSettings.difficulty) {
+        console.log(fiveCheck);
+        boxItem.classList.add('bottomBorder');
+      }
     }
-    elemList.box.append(boxItem);
-  }
-}
-
-/* REWRITE TO SINGLE FUNC */
-function createHintItems(num, isVertical) {
-  for (let i = 0; i < num * num; ++i) {
-    let hintItem = document.createElement('div');
-    if (isVertical) hintItem.classList.add('vHintItem');
-    else hintItem.classList.add('hHintItem');
-    elemList.box.append(boxItem);
+    appendTarget.append(boxItem);
   }
 }
 
@@ -40,13 +32,36 @@ function createMainPage() {
 
   elemList.vHints = document.createElement('div');
   elemList.vHints.classList.add('vHints');
+  elemList.vHints.style.grid = `repeat(1,1fr)/repeat(${gameSettings.difficulty},1fr)`;
   elemList.main.append(elemList.vHints);
 
   elemList.hHints = document.createElement('div');
   elemList.hHints.classList.add('hHints');
+  elemList.hHints.style.grid = `repeat(${gameSettings.difficulty},1fr)/repeat(1,1fr)`;
   elemList.main.append(elemList.hHints);
 
-  createBoxItems(gameSettings.difficulty);
+  createBoxItems(gameSettings.difficulty, 'boxItem', elemList.box);
+  createBoxItems(gameSettings.difficulty, 'vhItem', elemList.vHints);
+  createBoxItems(gameSettings.difficulty, 'hhItem', elemList.hHints);
+
+  elemList.box.addEventListener(
+    'click',
+    (element) => {
+      let itemCL = element.target.classList;
+      if (itemCL.contains('boxItem') && !itemCL.contains('ignored')) itemCL.toggle('checked');
+    },
+    false,
+  );
+
+  elemList.box.addEventListener(
+    'contextmenu',
+    (element) => {
+      element.preventDefault();
+      let itemCL = element.target.classList;
+      if (itemCL.contains('boxItem') && !itemCL.contains('checked')) itemCL.toggle('ignored');
+    },
+    false,
+  );
 }
 
 function main() {
