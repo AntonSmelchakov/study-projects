@@ -15,9 +15,25 @@ function createBoxItems(num, itemClass, appendTarget) {
         console.log(fiveCheck);
         boxItem.classList.add('bottomBorder');
       }
+      boxItem.id = i;
     }
     appendTarget.append(boxItem);
   }
+}
+
+function resetBoard() {
+  gameSettings.workSpace = [];
+  for (let i = 0; i < gameSettings.difficulty; ++i) {
+    gameSettings.workSpace.push([]);
+    for (let j = 0; j < gameSettings.difficulty; ++j) {
+      gameSettings.workSpace[i].push(0);
+    }
+  }
+}
+
+function chooseRiddle(riddles) {
+  gameSettings.riddle = riddles.easy.smile;
+  resetBoard();
 }
 
 function createMainPage() {
@@ -48,7 +64,16 @@ function createMainPage() {
     'click',
     (element) => {
       let itemCL = element.target.classList;
-      if (itemCL.contains('boxItem') && !itemCL.contains('ignored')) itemCL.toggle('checked');
+      if (itemCL.contains('boxItem') && !itemCL.contains('ignored')) {
+        itemCL.toggle('checked');
+        let eId = element.target.id;
+        let row = Math.floor(eId / gameSettings.difficulty);
+        let column = eId % gameSettings.difficulty;
+        gameSettings.workSpace[row][column] = gameSettings.workSpace[row][column] ? 0 : 1;
+        let w = gameSettings.workSpace.toString();
+        let r = gameSettings.riddle.toString();
+        if (w === r) console.log('win');
+      }
     },
     false,
   );
@@ -66,6 +91,9 @@ function createMainPage() {
 
 function main() {
   createMainPage();
+  chooseRiddle(riddles);
+  console.log(gameSettings.workSpace);
 }
 
+const riddles = await fetch('./riddles.json').then((resp) => resp.json());
 main();
