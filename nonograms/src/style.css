@@ -101,6 +101,11 @@ main {
   }
 }
 
+.vhItem,
+.hhItem {
+  justify-content: flex-end;
+}
+
 .checked {
   background: black;
 }

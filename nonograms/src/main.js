@@ -29,11 +29,39 @@ function resetBoard() {
       gameSettings.workSpace[i].push(0);
     }
   }
+  elemList.box.innerHTML = '';
+  createBoxItems(gameSettings.difficulty, 'boxItem', elemList.box);
+}
+
+function formHints() {
+  let vHints = document.querySelectorAll('.vhItem');
+  let hHints = document.querySelectorAll('.hhItem');
+  for (let i = 0; i < gameSettings.difficulty; ++i) {
+    let vCount = 0;
+    let hCount = 0;
+    for (let j = 0; j < gameSettings.difficulty; ++j) {
+      if (gameSettings.riddle[j][i] === 1) {
+        vCount += 1;
+        if (j === gameSettings.difficulty - 1) vHints[i].innerHTML += `${vCount}<br>`;
+      } else {
+        if (vCount > 0) vHints[i].innerHTML += `${vCount}<br>`;
+        vCount = 0;
+      }
+      if (gameSettings.riddle[i][j] === 1) {
+        hCount += 1;
+        if (j === gameSettings.difficulty - 1) hHints[i].innerHTML += `${hCount} `;
+      } else {
+        if (hCount > 0) hHints[i].innerHTML += `${hCount} `;
+        hCount = 0;
+      }
+    }
+  }
 }
 
 function chooseRiddle(riddles) {
-  gameSettings.riddle = riddles.easy.smile;
+  gameSettings.riddle = riddles.easy.surprise;
   resetBoard();
+  formHints();
 }
 
 function createMainPage() {
@@ -92,7 +120,7 @@ function createMainPage() {
 function main() {
   createMainPage();
   chooseRiddle(riddles);
-  console.log(gameSettings.workSpace);
+  console.log(gameSettings.riddle);
 }
 
 const riddles = await fetch('./riddles.json').then((resp) => resp.json());
