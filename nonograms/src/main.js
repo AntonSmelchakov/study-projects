@@ -64,25 +64,40 @@ function chooseRiddle(riddles) {
   formHints();
 }
 
-function createMainPage() {
-  elemList.main = document.createElement('main');
-  elemList.main.classList.add('mainContainer');
-  document.body.append(elemList.main);
+function createComponent(varName, tag, compClass, appendTarget, gridParams) {
+  elemList[varName] = document.createElement(tag);
+  elemList[varName].classList.add(compClass);
+  if (gridParams) {
+    elemList[varName].style.grid = `repeat(${gridParams[0]},1fr)/repeat(${gridParams[1]},1fr)`;
+  }
+  appendTarget.append(elemList[varName]);
+}
 
-  elemList.box = document.createElement('div');
+function createMainPage() {
+  /* elemList.main = document.createElement('main');
+  elemList.main.classList.add('mainContainer');
+  document.body.append(elemList.main); */
+
+  createComponent('main', 'main', 'mainContainer', document.body);
+
+  /* elemList.box = document.createElement('div');
   elemList.box.classList.add('box');
   elemList.box.style.grid = `repeat(${gameSettings.difficulty},1fr)/repeat(${gameSettings.difficulty},1fr)`;
-  elemList.main.append(elemList.box);
+  elemList.main.append(elemList.box); */
 
-  elemList.vHints = document.createElement('div');
+  createComponent('box', 'div', 'box', elemList.main);
+
+  /* elemList.vHints = document.createElement('div');
   elemList.vHints.classList.add('vHints');
   elemList.vHints.style.grid = `repeat(1,1fr)/repeat(${gameSettings.difficulty},1fr)`;
-  elemList.main.append(elemList.vHints);
+  elemList.main.append(elemList.vHints); */
 
-  elemList.hHints = document.createElement('div');
+  createComponent('vHints', 'div', 'vHints', elemList.main, [1, gameSettings.difficulty]);
+  /* elemList.hHints = document.createElement('div');
   elemList.hHints.classList.add('hHints');
   elemList.hHints.style.grid = `repeat(${gameSettings.difficulty},1fr)/repeat(1,1fr)`;
-  elemList.main.append(elemList.hHints);
+  elemList.main.append(elemList.hHints); */
+  createComponent('hHints', 'div', 'hHints', elemList.main, [gameSettings.difficulty, 1]);
 
   createBoxItems(gameSettings.difficulty, 'boxItem', elemList.box);
   createBoxItems(gameSettings.difficulty, 'vhItem', elemList.vHints);
