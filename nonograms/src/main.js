@@ -87,6 +87,7 @@ function chooseRiddle(riddle, clearBoard) {
     elemList.timer.textContent = '00:00';
     timerOnOff(false);
   }
+  elemList.description.textContent = gameSettings.chosenRiddle.description;
   elemList.vHints.innerHTML = '';
   elemList.hHints.innerHTML = '';
   createBoxItems(gameSettings.difficulty, 'vhItem', elemList.vHints);
@@ -150,14 +151,15 @@ function createMainPage() {
   createComponent('hHints', 'div', 'hHints', elemList.main, [gameSettings.difficulty, 1]);
 
   createComponent('botPanel', 'div', 'botPanel', elemList.main);
-  createComponent('timer', 'p', 'button', elemList.botPanel);
+  createComponent('timer', 'p', 'div', elemList.botPanel);
   elemList.timer.textContent = '00:00';
+  createComponent('description', 'p', '', elemList.botPanel);
+  elemList.description.textContent = 'Chose a riddle or just pop these bad boys';
 
   createComponent('shadow', 'div', ['shadow', 'hidden'], document.body);
   createComponent('messageBox', 'div', ['messageBox', 'hidden'], elemList.main);
   createComponent('closeBtn', 'button', 'closeBtn', elemList.messageBox);
   createComponent('message', 'p', 'message', elemList.messageBox);
-  elemList.closeBtn.textContent = 'close';
 
   elemList.closeBtn.addEventListener('click', () => {
     elemList.shadow.classList.add('hidden');
@@ -207,7 +209,6 @@ function createMainPage() {
   createComponent('riddleSelect', 'div', 'riddleSelect', elemList.main);
   let closeBtn = elemList.closeBtn.cloneNode();
   closeBtn.addEventListener('click', () => (elemList.riddleSelect.style.right = '-100%'));
-  closeBtn.textContent = 'Close';
   elemList.riddleSelect.append(closeBtn);
   let title = document.createElement('h2');
   title.textContent = 'Choose the riddle you want to solve';
@@ -263,7 +264,6 @@ function createMainPage() {
     elemList.leaderboard.classList.add('hidden');
     elemList.shadow.classList.add('hidden');
   });
-  closeBtn.textContent = 'Close';
   elemList.leaderboard.append(closeBtn);
 
   button = createComponent('', 'button', 'button', '');
@@ -277,6 +277,21 @@ function createMainPage() {
         elemList.box.classList.add('inactive');
       }
     });
+  });
+  elemList.leftPanel.append(button);
+
+  button = createComponent('', 'button', 'button', '');
+  gameSettings.theme = 'light';
+  document.body.style = '--theme: light';
+  button.innerHTML = 'Switch<br>color theme';
+  button.addEventListener('click', () => {
+    if (gameSettings.theme === 'light') {
+      document.body.style = '--theme: dark';
+      gameSettings.theme = 'dark';
+    } else {
+      document.body.style = '--theme: light';
+      gameSettings.theme = 'light';
+    }
   });
   elemList.leftPanel.append(button);
 

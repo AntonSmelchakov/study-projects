@@ -1,12 +1,27 @@
 :root {
-  --main-bg-color: #faf0ca;
-  --button-color: #453823;
-  --secondary-bg-color: #587199;
-  --third-bg-color: #50555c;
-  --box-bg-color-light: #fff;
-  --border-color-light: black;
   --border-thick: 3px;
   --border-thin: 1px;
+  --font-size: utopia.clamp(10, 30);
+}
+
+@container style(--theme: light) {
+  * {
+    --main-bg-color-light: #faf0ca;
+    --button-color-light: #ffffff;
+    --box-bg-color-light: #fff;
+    --border-color-light: black;
+    --font-color: black;
+  }
+}
+
+@container style(--theme: dark) {
+  * {
+    --main-bg-color-light: #3d3d3d;
+    --button-color-light: #777777;
+    --box-bg-color-light: #949494;
+    --border-color-light: rgb(199, 199, 199);
+    --font-color: black;
+  }
 }
 
 * {
@@ -16,7 +31,10 @@
 
 body {
   height: 100vh;
-  background: var(--main-bg-color);
+}
+
+.mainContainer {
+  background: var(--main-bg-color-light);
 }
 
 div,
@@ -61,7 +79,7 @@ main {
 .vHints {
   display: grid;
   width: anchor-size(100%);
-  height: max-content;
+  max-height: fit-content;
   position: fixed;
   position-anchor: --box;
   position-area: block-start;
@@ -83,7 +101,8 @@ main {
 }
 .hHints {
   display: grid;
-  width: max-content;
+  width: 100%;
+  max-width: fit-content;
   position: fixed;
   position-anchor: --box;
   height: anchor-size(100%);
@@ -112,10 +131,12 @@ main {
 }
 
 .leftPanel {
+  padding: 5px;
   position-anchor: --box;
   position-area: right;
   height: anchor-size(100%);
-  width: fit-content;
+  width: 100%;
+  max-width: fit-content;
   position: absolute;
   flex-direction: column;
 }
@@ -152,7 +173,11 @@ main {
   width: 100%;
   height: 100%;
   transition: 1s;
-  background: var(--main-bg-color);
+  background: var(--main-bg-color-light);
+
+  & > .button {
+    max-width: fit-content;
+  }
 }
 
 .riddleGrid {
@@ -182,7 +207,7 @@ main {
   height: 100%;
   max-width: 80%;
   max-height: 50%;
-  background: var(--main-bg-color);
+  background: var(--main-bg-color-light);
   border-radius: 25px;
 }
 
@@ -190,6 +215,25 @@ main {
   position: absolute;
   top: 25px;
   right: 25px;
+  background: none;
+  border: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background: black;
+    width: 100%;
+    height: 2px;
+    transform: rotate(45deg);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 2px;
+    transform: rotate(-45deg);
+  }
 }
 
 .hidden {
@@ -204,9 +248,9 @@ main {
   z-index: 3;
   flex-direction: column;
   padding: 50px;
-  background: var(--main-bg-color);
+  background: var(--main-bg-color-light);
   position: fixed;
-  background: var(--main-bg-color);
+  background: var(--main-bg-color-light);
   border-radius: 25px;
 }
 
@@ -215,8 +259,66 @@ main {
 }
 
 .botPanel {
+  padding: 10px;
+  flex-direction: column;
   position: fixed;
   position-anchor: --box;
   width: anchor-size(100%);
   position-area: center bottom;
+  margin: 5px 0;
+  height: fit-content;
+  width: 100%;
+  background: var(--box-bg-color-light);
+  color: var(--font-color-main-light);
+  border: var(--border-thick) solid var(--border-color-light);
+  font-size: var(--font-size);
+}
+
+.button {
+  margin: 5px 0;
+  width: 100%;
+  background: var(--box-bg-color-light);
+  color: var(--font-color);
+  border-radius: 25px;
+  border: var(--border-thick) solid var(--border-color-light);
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  height: utopia.clamp(30, 80);
+  font-size: var(--font-size);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 25px;
+  height: 25px;
+  background: none;
+  border: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background: black;
+    width: 100%;
+    height: 2px;
+    transform: translate(-10px) rotate(45deg);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 2px;
+    transform: translate(-10px) rotate(-45deg);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
