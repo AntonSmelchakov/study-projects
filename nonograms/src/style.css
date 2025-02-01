@@ -87,6 +87,7 @@ main {
   border-top: none;
 
   .vhItem {
+    background: var(--box-bg-color-light);
     flex-direction: column;
     border-right: var(--border-thin) solid var(--border-color-light);
     border-left: var(--border-thin) solid var(--border-color-light);
@@ -111,6 +112,7 @@ main {
   border-left: none;
 
   .hhItem {
+    background: var(--box-bg-color-light);
     border-bottom: var(--border-thin) solid var(--border-color-light);
     border-top: var(--border-thin) solid var(--border-color-light);
     width: 100%;
@@ -185,6 +187,7 @@ main {
 }
 
 .diffContainer {
+  padding: 5px;
   height: 100%;
   width: 100%;
   flex-direction: column;
