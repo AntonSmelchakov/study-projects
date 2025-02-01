@@ -154,7 +154,7 @@ function createMainPage() {
   createComponent('timer', 'p', 'div', elemList.botPanel);
   elemList.timer.textContent = '00:00';
   createComponent('description', 'p', '', elemList.botPanel);
-  elemList.description.textContent = 'Chose a riddle or just pop these bad boys';
+  elemList.description.textContent = 'Choose a riddle or just pop these bad boys';
 
   createComponent('shadow', 'div', ['shadow', 'hidden'], document.body);
   createComponent('messageBox', 'div', ['messageBox', 'hidden'], elemList.main);
@@ -357,6 +357,8 @@ async function main() {
     fillLeaderboard();
   }
   initSounds();
+  gameSettings.chosenRiddle = riddles[0];
+  chooseRiddle(gameSettings.chosenRiddle, true);
 }
 
 const riddles = await fetch('./riddles.json').then((resp) => resp.json());
