@@ -184,26 +184,27 @@ function createMainPage() {
   item.innerHTML = 'Save<br> Game';
   elemList.leftPanel.append(item);
   item.addEventListener('click', () => {
-    if (gameSettings.savedGame) {
-      item.innerHTML = 'Save<br> Game';
-      elemList.chosenRiddle = JSON.parse(localStorage.getItem('riddle'));
-      gameSettings.difficulty = elemList.chosenRiddle.data.length;
-      chooseRiddle(elemList.chosenRiddle, true);
-      gameSettings.workSpace = JSON.parse(localStorage.getItem('savedGame'));
-      elemList.timer.textContent = JSON.parse(localStorage.getItem('timer'));
-      let arr = gameSettings.workSpace.flat();
-      arr.forEach((x, i) => {
-        if (x === 1) document.getElementById(i).classList.add('checked');
-      });
-      timerOnOff(true);
-      gameSettings.savedGame = false;
-    } else {
-      localStorage.setItem('savedGame', JSON.stringify(gameSettings.workSpace));
-      localStorage.setItem('timer', JSON.stringify(elemList.timer.textContent));
-      localStorage.setItem('riddle', JSON.stringify(gameSettings.chosenRiddle));
-      gameSettings.savedGame = true;
-      item.innerHTML = 'Continue<br>last game';
-    }
+    localStorage.setItem('savedGame', JSON.stringify(gameSettings.workSpace));
+    localStorage.setItem('timer', JSON.stringify(elemList.timer.textContent));
+    localStorage.setItem('riddle', JSON.stringify(gameSettings.chosenRiddle));
+    gameSettings.savedGame = true;
+  });
+
+  item = createComponent('loadBtn', 'button', 'button', '');
+  item.innerHTML = 'Continue<br>last game';
+  elemList.leftPanel.append(item);
+  item.addEventListener('click', () => {
+    gameSettings.chosenRiddle = JSON.parse(localStorage.getItem('riddle'));
+    gameSettings.difficulty = gameSettings.chosenRiddle.data.length;
+    chooseRiddle(gameSettings.chosenRiddle, true);
+    gameSettings.workSpace = JSON.parse(localStorage.getItem('savedGame'));
+    elemList.timer.textContent = JSON.parse(localStorage.getItem('timer'));
+    let arr = gameSettings.workSpace.flat();
+    arr.forEach((x, i) => {
+      if (x === 1) document.getElementById(i).classList.add('checked');
+    });
+    timerOnOff(true);
+    gameSettings.savedGame = false;
   });
 
   createComponent('riddleSelect', 'div', 'riddleSelect', elemList.main);
@@ -349,7 +350,6 @@ function createMainPage() {
 
 function fillLeaderboard() {
   elemList.leaderboardGrid.replaceChildren();
-  console.log(gameSettings.leaderboard);
   let arr = gameSettings.leaderboard.map((x) => x);
   arr.sort((a, b) => a.time - b.time);
   for (const e of arr) {
@@ -364,7 +364,6 @@ async function main() {
   resetBoard();
   if (localStorage['savedGame']) {
     gameSettings.savedGame = true;
-    elemList.saveBtn.innerHTML = 'Continue<br>last game';
   }
   if (localStorage['leaderboard']) {
     gameSettings.leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
