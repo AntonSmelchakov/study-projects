@@ -349,8 +349,10 @@ function createMainPage() {
 
 function fillLeaderboard() {
   elemList.leaderboardGrid.replaceChildren();
-  let arr = gameSettings.leaderboard.sort((a, b) => a.time - b.time);
-  for (const e of gameSettings.leaderboard) {
+  console.log(gameSettings.leaderboard);
+  let arr = gameSettings.leaderboard.map((x) => x);
+  arr.sort((a, b) => a.time - b.time);
+  for (const e of arr) {
     let item = document.createElement('p');
     item.textContent = `${e.name} - ${e.difficulty} - ${e.timeString}`;
     elemList.leaderboardGrid.append(item);
