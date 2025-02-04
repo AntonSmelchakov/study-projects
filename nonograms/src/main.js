@@ -62,7 +62,6 @@ function formHints() {
 
 function winHandler() {
   timerOnOff(false);
-  console.log(gameSettings);
   elemList.box.classList.add('inactive');
   elemList.shadow.classList.remove('hidden');
   elemList.messageBox.classList.remove('hidden');
@@ -178,7 +177,7 @@ function createMainPage() {
   item.innerHTML = 'Reset<br> Board';
   elemList.leftPanel.append(item);
   item.addEventListener('click', () => {
-    resetBoard();
+    chooseRiddle(gameSettings.chosenRiddle, true);
   });
 
   item = createComponent('saveBtn', 'button', 'button', '');
@@ -187,22 +186,23 @@ function createMainPage() {
   item.addEventListener('click', () => {
     if (gameSettings.savedGame) {
       item.innerHTML = 'Save<br> Game';
+      elemList.chosenRiddle = JSON.parse(localStorage.getItem('riddle'));
+      gameSettings.difficulty = elemList.chosenRiddle.data.length;
+      chooseRiddle(elemList.chosenRiddle, true);
       gameSettings.workSpace = JSON.parse(localStorage.getItem('savedGame'));
+      elemList.timer.textContent = JSON.parse(localStorage.getItem('timer'));
       let arr = gameSettings.workSpace.flat();
       arr.forEach((x, i) => {
-        console.log(document.getElementById(i));
         if (x === 1) document.getElementById(i).classList.add('checked');
       });
-      elemList.timer.textContent = JSON.parse(localStorage.getItem('timer'));
-      elemList.chosenRiddle = JSON.parse(localStorage.getItem('riddle'));
-      chooseRiddle(elemList.chosenRiddle, false);
       timerOnOff(true);
       gameSettings.savedGame = false;
     } else {
       localStorage.setItem('savedGame', JSON.stringify(gameSettings.workSpace));
       localStorage.setItem('timer', JSON.stringify(elemList.timer.textContent));
-      console.log(gameSettings.chosenRiddle);
       localStorage.setItem('riddle', JSON.stringify(gameSettings.chosenRiddle));
+      gameSettings.savedGame = true;
+      item.innerHTML = 'Continue<br>last game';
     }
   });
 
@@ -217,7 +217,6 @@ function createMainPage() {
   let diffs = ['easy', 'medium', 'hard'];
   for (const diff of diffs) {
     createComponent(diff, 'div', 'diffContainer', elemList.riddleGrid);
-    console.log(elemList);
     let title = document.createElement('p');
     title.textContent = diff;
     elemList[diff].append(title);
@@ -269,12 +268,15 @@ function createMainPage() {
   button = createComponent('', 'button', 'button', '');
   button.textContent = 'Solution';
   button.addEventListener('click', () => {
+    resetBoard();
+    elemList.timer.textContent = '00:00';
+    timerOnOff(false);
+    elemList.box.classList.add('inactive');
     let arr = gameSettings.riddle.flat();
     arr.forEach((x, i) => {
       if (x === 1) {
         let item = document.getElementById(i);
         item.classList.add('checked');
-        elemList.box.classList.add('inactive');
       }
     });
   });
@@ -347,15 +349,12 @@ function createMainPage() {
 
 function fillLeaderboard() {
   elemList.leaderboardGrid.replaceChildren();
-  console.log(elemList.leaderboardGrid);
   let arr = gameSettings.leaderboard.sort((a, b) => a.time - b.time);
-  console.log(gameSettings.leaderboard);
   for (const e of gameSettings.leaderboard) {
     let item = document.createElement('p');
     item.textContent = `${e.name} - ${e.difficulty} - ${e.timeString}`;
     elemList.leaderboardGrid.append(item);
   }
-  console.log(arr);
 }
 
 async function main() {
