@@ -191,7 +191,7 @@ function createMainPage() {
   });
 
   item = createComponent('loadBtn', 'button', 'button', '');
-  item.innerHTML = 'Continue<br>last game';
+  item.innerHTML = 'Continue<br>saved game';
   elemList.leftPanel.append(item);
   item.addEventListener('click', () => {
     gameSettings.chosenRiddle = JSON.parse(localStorage.getItem('riddle'));
