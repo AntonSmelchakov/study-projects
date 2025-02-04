@@ -315,11 +315,12 @@ function createMainPage() {
     'click',
     (element) => {
       let itemCL = element.target.classList;
-      if (itemCL.contains('boxItem') && !itemCL.contains('ignored')) {
+      if (itemCL.contains('boxItem')) {
         if (!gameSettings.timerOn) timerOnOff(true);
         if (!itemCL.contains('checked') && gameSettings.soundOn) soundList.checked.play();
         else if (gameSettings.soundOn) soundList.empty.play();
         itemCL.toggle('checked');
+        itemCL.remove('ignored');
         let eId = element.target.id;
         let row = Math.floor(eId / gameSettings.difficulty);
         let column = eId % gameSettings.difficulty;
@@ -337,11 +338,19 @@ function createMainPage() {
     (element) => {
       element.preventDefault();
       let itemCL = element.target.classList;
-      if (itemCL.contains('boxItem') && !itemCL.contains('checked')) {
+      if (itemCL.contains('boxItem')) {
         if (!gameSettings.timerOn) timerOnOff(true);
         if (!itemCL.contains('ignored') && gameSettings.soundOn) soundList.ignored.play();
         else if (gameSettings.soundOn) soundList.empty.play();
+        itemCL.remove('checked');
         itemCL.toggle('ignored');
+        let eId = element.target.id;
+        let row = Math.floor(eId / gameSettings.difficulty);
+        let column = eId % gameSettings.difficulty;
+        gameSettings.workSpace[row][column] = 0;
+        let w = gameSettings.workSpace.toString();
+        let r = gameSettings.riddle.toString();
+        if (w === r) winHandler();
       }
     },
     false,
