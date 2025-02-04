@@ -67,7 +67,7 @@ function winHandler() {
   elemList.shadow.classList.remove('hidden');
   elemList.messageBox.classList.remove('hidden');
   elemList.message.textContent = `Congratulations! You won in ${elemList.timer.textContent}!`;
-  soundList.win.play();
+  if (gameSettings.soundOn) soundList.win.play();
   let lbObject = Object.assign({}, gameSettings.chosenRiddle);
   lbObject.time = gameSettings.time;
   lbObject.timeString = `${elemList.timer.textContent}`;
@@ -294,6 +294,19 @@ function createMainPage() {
     }
   });
   elemList.leftPanel.append(button);
+  button = createComponent('', 'button', 'button', '');
+  gameSettings.soundOn = true;
+  button.innerHTML = 'Sound on';
+  button.addEventListener('click', () => {
+    if (gameSettings.soundOn) {
+      button.innerHTML = 'Sound off';
+      gameSettings.soundOn = false;
+    } else {
+      button.innerHTML = 'Sound on';
+      gameSettings.soundOn = true;
+    }
+  });
+  elemList.leftPanel.append(button);
 
   elemList.box.addEventListener(
     'click',
@@ -301,8 +314,8 @@ function createMainPage() {
       let itemCL = element.target.classList;
       if (itemCL.contains('boxItem') && !itemCL.contains('ignored')) {
         if (!gameSettings.timerOn) timerOnOff(true);
-        if (!itemCL.contains('checked')) soundList.checked.play();
-        else soundList.empty.play();
+        if (!itemCL.contains('checked') && gameSettings.soundOn) soundList.checked.play();
+        else if (gameSettings.soundOn) soundList.empty.play();
         itemCL.toggle('checked');
         let eId = element.target.id;
         let row = Math.floor(eId / gameSettings.difficulty);
@@ -323,8 +336,8 @@ function createMainPage() {
       let itemCL = element.target.classList;
       if (itemCL.contains('boxItem') && !itemCL.contains('checked')) {
         if (!gameSettings.timerOn) timerOnOff(true);
-        if (!itemCL.contains('ignored')) soundList.ignored.play();
-        else soundList.empty.play();
+        if (!itemCL.contains('ignored') && gameSettings.soundOn) soundList.ignored.play();
+        else if (gameSettings.soundOn) soundList.empty.play();
         itemCL.toggle('ignored');
       }
     },
