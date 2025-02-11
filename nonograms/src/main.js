@@ -4,6 +4,7 @@ import './style.css';
 const gameSettings = { difficulty: 5, timerOn: false, savedGame: false };
 const elemList = {};
 const soundList = {};
+const what = true;
 
 function createBoxItems(num, itemClass, appendTarget) {
   let maxIter = itemClass === 'boxItem' ? num * num : num;
