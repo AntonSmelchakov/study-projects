@@ -1,50 +1,51 @@
 interface EventListener {
   eventName: string;
-  callbackArr: (() => void)[];
+  callbackArr: ((event: MouseEvent) => void)[];
 }
 
-export interface Parameters {
+export interface BaseElementParameters {
   tag: string;
+  id?: string;
   classNames?: string[];
-  textContent?: string;
   eventListeners?: EventListener[];
 }
 
+export interface Parameters extends BaseElementParameters {
+  textContent?: string;
+}
+
 export default class ElementBuilder {
-  private element;
+  protected element: HTMLElement | HTMLButtonElement;
 
   constructor(parameters: Parameters) {
     this.element = document.createElement(parameters.tag);
     this.configureElement(parameters);
   }
 
-  public configureElement(parameters: Parameters): this {
-    this.setCssClasses(parameters.classNames);
-    this.setTextContent(parameters.textContent);
-    this.setEventListeners(parameters.eventListeners);
-    return this;
+  public configureElement(parameters: Parameters): void {
+    if (parameters.id) this.setId(parameters.id);
+    if (parameters.classNames) this.setCssClasses(parameters.classNames);
+    if (parameters.textContent) this.setTextContent(parameters.textContent);
+    if (parameters.eventListeners) this.setEventListeners(parameters.eventListeners);
   }
 
-  public getElement(): HTMLElement {
+  public getElement(): HTMLElement | HTMLButtonElement {
     return this.element;
   }
 
-  public setCssClasses(cssClasses: string[] | undefined): void {
-    if (cssClasses) {
-      for (const cssClass of cssClasses) this.element.classList.add(cssClass);
-    }
+  public setId(id: string): void {
+    this.element.id = id;
   }
 
-  public setTextContent(text: string | undefined): void {
-    if (text) this.element.textContent = text;
+  public setCssClasses(cssClasses: string[]): void {
+    for (const cssClass of cssClasses) this.element.classList.add(cssClass);
   }
 
-  public setEventListeners(eventListeners: EventListener[] | undefined): void {
-    if (eventListeners) {
-      for (const listener of eventListeners) {
-        for (const callback of listener.callbackArr)
-          this.element.addEventListener(listener.eventName, () => callback);
-      }
-    }
+  public setTextContent(text: string): void {
+    this.element.textContent = text;
+  }
+
+  public addEventListener(event: string, callback: () => void): void {
+    this.element.addEventListener(event, callback);
   }
 }
