@@ -1,19 +1,14 @@
-import ElementBuilder from '../../utils/element-builder';
+import ComplexElement from '../../utils/complex-element';
 import Index from './index';
 
-export default class Main {
-  public builder: ElementBuilder;
+export default class Main extends ComplexElement {
   constructor() {
-    this.builder = new ElementBuilder({ tag: 'main', classNames: ['main'] });
+    super({ tag: 'main', classNames: ['main'] });
     this.configureElement();
-  }
-
-  public getNode(): HTMLElement {
-    return this.builder.getElement();
   }
 
   public configureElement(): void {
     const index = new Index();
-    this.getNode().append(index.builder.getElement());
+    this.getElement().append(index.getElement());
   }
 }

@@ -1,21 +1,23 @@
-interface EventListener {
-  eventName: string;
-  callbackArr: ((event: MouseEvent) => void)[];
-}
+import type ComplexElement from './complex-element';
+
+export type HTMLTypes = HTMLElement | HTMLButtonElement | HTMLDialogElement;
 
 export interface BaseElementParameters {
   tag: string;
   id?: string;
   classNames?: string[];
-  eventListeners?: EventListener[];
 }
 
 export interface Parameters extends BaseElementParameters {
   textContent?: string;
 }
 
+function createElement<HTMLType>(tag: string): HTMLType {
+  return document.createElement(tag);
+}
+
 export default class ElementBuilder {
-  protected element: HTMLElement | HTMLButtonElement;
+  protected element;
 
   constructor(parameters: Parameters) {
     this.element = document.createElement(parameters.tag);
@@ -26,10 +28,9 @@ export default class ElementBuilder {
     if (parameters.id) this.setId(parameters.id);
     if (parameters.classNames) this.setCssClasses(parameters.classNames);
     if (parameters.textContent) this.setTextContent(parameters.textContent);
-    if (parameters.eventListeners) this.setEventListeners(parameters.eventListeners);
   }
 
-  public getElement(): HTMLElement | HTMLButtonElement {
+  public getElement(): HTMLTypes {
     return this.element;
   }
 
@@ -47,5 +48,9 @@ export default class ElementBuilder {
 
   public addEventListener(event: string, callback: () => void): void {
     this.element.addEventListener(event, callback);
+  }
+
+  public append(childElements: (ElementBuilder | ComplexElement)[]): void {
+    for (const item of childElements) this.element.append(item.getElement());
   }
 }

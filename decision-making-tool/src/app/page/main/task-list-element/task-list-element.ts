@@ -2,6 +2,7 @@ import type { InputParameters, LabelParameters } from '../../../utils/other-buil
 import { InputBuilder, LabelBuilder } from '../../../utils/other-builder';
 import type { Parameters } from '../../../utils/element-builder';
 import ElementBuilder from '../../../utils/element-builder';
+import ComplexElement from '../../../utils/complex-element';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters | LabelParameters;
@@ -15,34 +16,36 @@ const ELEM_PARAMS: ParameterItem = {
   title: {
     tag: 'input',
     classNames: ['listItemTitle'],
+    placeholder: 'title',
   },
   weight: {
     tag: 'input',
     classNames: ['listItemWight'],
+    placeholder: 'weight',
   },
   deleteBtn: {
     tag: 'button',
     classNames: ['listItemDeleteBtn'],
+    textContent: 'delete',
   },
 };
 
-export default class TaskListElement {
+export default class TaskListElement extends ComplexElement {
   public id: LabelBuilder;
   public title: InputBuilder;
   public weight: InputBuilder;
   public deleteBtn: ElementBuilder;
-  public builder: ElementBuilder;
 
-  constructor() {
-    this.builder = new ElementBuilder({ tag: 'ul', classNames: ['taskListElement'] });
+  constructor(id: number) {
+    super({ tag: 'ul', classNames: ['taskListElement'] });
     this.id = new LabelBuilder(ELEM_PARAMS.id);
     this.title = new InputBuilder(ELEM_PARAMS.title);
     this.weight = new InputBuilder(ELEM_PARAMS.weight);
     this.deleteBtn = new ElementBuilder(ELEM_PARAMS.deleteBtn);
-    this.configureElement();
+    this.configureElement(id);
   }
 
-  public configureElement() {
+  public configureElement(id: number): void {
     this.builder
       .getElement()
       .append(
@@ -52,6 +55,7 @@ export default class TaskListElement {
         this.deleteBtn.getElement(),
       );
     this.configureDeleteBtn();
+    this.setId(id);
   }
 
   public setId(id: number): void {
@@ -70,9 +74,5 @@ export default class TaskListElement {
 
   public configureDeleteBtn(): void {
     this.deleteBtn.addEventListener('click', (): void => this.builder.getElement().remove());
-  }
-
-  public getNode(): HTMLElement {
-    return this.builder.getElement();
   }
 }

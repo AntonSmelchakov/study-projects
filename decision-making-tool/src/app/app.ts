@@ -8,6 +8,6 @@ export default class App {
   }
 
   public buildPage(): void {
-    document.body.append(this.main.getNode());
+    document.body.append(this.main.getElement());
   }
 }
