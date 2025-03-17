@@ -12,10 +12,6 @@ export interface Parameters extends BaseElementParameters {
   textContent?: string;
 }
 
-function createElement<HTMLType>(tag: string): HTMLType {
-  return document.createElement(tag);
-}
-
 export default class ElementBuilder {
   protected element;
 

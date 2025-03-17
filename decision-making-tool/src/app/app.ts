@@ -1,9 +1,12 @@
 import Main from './page/main/main';
+import StateHandler from './state-handler/state-handler';
 
 export default class App {
-  public main: Main;
+  private main: Main;
+  private stateHandler: StateHandler;
   constructor() {
-    this.main = new Main();
+    this.stateHandler = new StateHandler();
+    this.main = new Main(this.stateHandler);
     this.buildPage();
   }
 

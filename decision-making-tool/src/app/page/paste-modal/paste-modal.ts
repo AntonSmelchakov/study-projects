@@ -3,10 +3,13 @@ import type { Parameters } from '../../utils/element-builder';
 import ElementBuilder from '../../utils/element-builder';
 import type { InputParameters } from '../../utils/other-builder';
 import { InputBuilder } from '../../utils/other-builder';
+import type Index from '../main/index';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters;
 };
+
+type ValidPasteData = [string, number][];
 
 const ELEM_PARAMS: ParameterItem = {
   dialog: {
@@ -36,18 +39,26 @@ const ELEM_PARAMS: ParameterItem = {
 };
 
 export default class PasteModal extends ComplexElement {
+  public pasteData: ValidPasteData;
   protected container: ElementBuilder;
   protected pasteField: InputBuilder;
   protected cancelBtn: ElementBuilder;
   protected confirmBtn: ElementBuilder;
+  protected index: Index;
 
-  constructor() {
+  constructor(index: Index) {
     super(ELEM_PARAMS.dialog);
     this.container = new ElementBuilder(ELEM_PARAMS.container);
     this.pasteField = new InputBuilder(ELEM_PARAMS.inputField);
     this.cancelBtn = new ElementBuilder(ELEM_PARAMS.cancelBtn);
     this.confirmBtn = new ElementBuilder(ELEM_PARAMS.confirmBtn);
+    this.index = index;
+    this.pasteData = [];
     this.configureElement();
+  }
+
+  private static isValidPasteData(incomingData: unknown): incomingData is ValidPasteData {
+    return !!incomingData;
   }
 
   public configureElement(): void {
@@ -69,6 +80,7 @@ export default class PasteModal extends ComplexElement {
 
   protected close(): void {
     const item = this.getElement();
+    this.getElement().remove();
     if (item instanceof HTMLDialogElement) item.close();
   }
 
@@ -77,16 +89,21 @@ export default class PasteModal extends ComplexElement {
       console.log('hey');
       event.preventDefault();
       const item = this.pasteField.getElement();
+      const pasteData: ValidPasteData = [];
       if (item instanceof HTMLTextAreaElement) {
         const values = item.value.split('\n');
-        const pasteData: [title: string, weight: number][] = [];
         for (const item of values) {
           const separateComma = item.lastIndexOf(',');
           const newTitle = item.slice(0, separateComma).trim();
           const newWeight = +item.slice(separateComma + 1).trim();
           pasteData.push([newTitle, newWeight]);
         }
-        console.log(pasteData);
+      }
+      if (PasteModal.isValidPasteData(pasteData)) {
+        this.pasteData = pasteData;
+        for (const item of pasteData) {
+          this.index.addOption(this.index.taskNum, { title: item[0], weight: `${item[1]}` });
+        }
       }
       this.close();
     });
