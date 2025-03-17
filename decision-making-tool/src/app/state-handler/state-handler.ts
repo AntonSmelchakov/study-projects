@@ -42,9 +42,19 @@ export default class StateHandler {
   public setOption(id: number, data: DataItem = {}): void {
     if (this.state) {
       if (!this.state[id]) this.state[id] = {};
-      if (data.title) this.state[id].title = data.title;
-      if (data.weight) this.state[id].weight = data.weight;
+      if (data.title) this.setOptionTitle(id, data.title);
+      if (data.weight) this.setOptionWeight(id, data.weight);
     }
+  }
+
+  public setOptionTitle(id: number, value: string): void {
+    if (!this.state) return;
+    this.state[id].title = value;
+  }
+
+  public setOptionWeight(id: number, value: string): void {
+    if (!this.state) return;
+    this.state[id].weight = value;
   }
 
   protected stateInit(): void {

@@ -2,8 +2,7 @@ import ComplexElement from '../../utils/complex-element';
 import type { Parameters } from '../../utils/element-builder';
 import ElementBuilder from '../../utils/element-builder';
 import type { InputParameters } from '../../utils/other-builder';
-import { InputBuilder } from '../../utils/other-builder';
-import type Index from '../main/index/index';
+import cssClasses from './style.module.css';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters;
@@ -12,16 +11,17 @@ type ParameterItem = {
 const ELEM_PARAMS: ParameterItem = {
   dialog: {
     tag: 'dialog',
-    classNames: ['dialog'],
+    classNames: [cssClasses.dialog],
   },
   container: {
     tag: 'div',
-    classNames: ['container'],
+    classNames: [cssClasses.container],
   },
   text: {
     tag: 'p',
     classNames: ['text'],
-    textContent: 'At least one option has to be valid, i.e positive number as weight and a title',
+    textContent:
+      'At least two(2) options has to be valid, i.e positive number as weight and a title',
   },
   cancelBtn: {
     tag: 'button',

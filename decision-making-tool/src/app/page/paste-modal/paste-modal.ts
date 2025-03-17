@@ -4,6 +4,7 @@ import ElementBuilder from '../../utils/element-builder';
 import type { InputParameters } from '../../utils/other-builder';
 import { InputBuilder } from '../../utils/other-builder';
 import type Index from '../main/index';
+import cssClases from './paste-modal.module.css';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters;
@@ -14,15 +15,15 @@ type ValidPasteData = [string, number][];
 const ELEM_PARAMS: ParameterItem = {
   dialog: {
     tag: 'dialog',
-    classNames: ['dialog'],
+    classNames: [cssClases.dialog],
   },
   container: {
     tag: 'form',
-    classNames: ['container'],
+    classNames: [cssClases.container],
   },
   inputField: {
     tag: 'textarea',
-    classNames: ['inputField'],
+    classNames: [cssClases.inputField],
     placeholder:
       'Past a list of the new options in a CSV-like format, as shown below. Title allows whitespaces,quotes and commas that is separated from weight by comma.\n\nTitle_1_with_commas_quotes_or_whitespaces , weight_as_number\nTitle_2_with_commas_quotes_or_whitespaces , weight_as_number',
   },

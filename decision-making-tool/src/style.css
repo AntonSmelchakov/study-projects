@@ -1,4 +1,5 @@
-body * {
+main,
+main * {
   text-align: center;
   margin: unset;
   padding: unset;

@@ -5,6 +5,7 @@ import ElementBuilder from '../../../utils/element-builder';
 import ComplexElement from '../../../utils/complex-element';
 import type StateHandler from '../../../state-handler/state-handler';
 import type { DataItem } from '../../../state-handler/state-handler';
+import './style.css';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters | LabelParameters;
@@ -22,7 +23,7 @@ const ELEM_PARAMS: ParameterItem = {
   },
   weight: {
     tag: 'input',
-    classNames: ['listItemWight'],
+    classNames: ['listItemWidth'],
     placeholder: 'weight',
     type: 'number',
   },
@@ -95,11 +96,11 @@ export default class TaskListElement extends ComplexElement {
   public configureInputFields(id: number): void {
     this.title.getElement().addEventListener('input', () => {
       const value = TaskListElement.getInputValue(this.title);
-      this.stateHandler.setOption(id, { title: value });
+      this.stateHandler.setOptionTitle(id, value);
     });
     this.weight.getElement().addEventListener('input', () => {
       const value = TaskListElement.getInputValue(this.weight);
-      this.stateHandler.setOption(id, { weight: value });
+      this.stateHandler.setOptionWeight(id, value);
     });
   }
 

@@ -1,5 +1,5 @@
 import type StateHandler from '../../../state-handler/state-handler';
-import type { DataItem, ValidJSON } from '../../../state-handler/state-handler';
+import type { DataItem } from '../../../state-handler/state-handler';
 import ComplexElement from '../../../utils/complex-element';
 import ElementBuilder from '../../../utils/element-builder';
 import type { Parameters } from '../../../utils/element-builder';
@@ -181,13 +181,14 @@ export default class Index extends ComplexElement {
 
   protected optionsValidation(): boolean {
     const data = this.stateHandler.getState('object');
-    let result: boolean = false;
+    console.log(data);
+    let check: number = 0;
     if (typeof data === 'object') {
       const array = Object.entries(data);
       for (const item of array) {
-        if (item[1].title && item[1].weight) result = true;
+        if (item[1].title && item[1].weight) check += 1;
       }
     }
-    return result;
+    return check >= 2 ? true : false;
   }
 }
