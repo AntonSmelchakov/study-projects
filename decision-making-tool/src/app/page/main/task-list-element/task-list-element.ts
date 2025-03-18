@@ -52,7 +52,7 @@ export default class TaskListElement extends ComplexElement {
   }
 
   private static getInputValue(InputElement: InputBuilder): string {
-    const value: string = InputElement.getElement().value;
+    const value: string = InputElement.getElement<HTMLInputElement>().value;
     return value;
   }
 
@@ -103,16 +103,4 @@ export default class TaskListElement extends ComplexElement {
       this.stateHandler.setOptionWeight(id, value);
     });
   }
-
-  /*  private parseElementState(): void {
-    const id: string | null = this.id.getElement().textContent;
-    const title: string | null = this.title.getElement().value;
-    const weight: string | null = this.weight.getElement().value;
-    const result: (number | string | undefined)[] = [];
-    console.log(result, id, title, weight);
-    result[0] = id ? +id.slice(1) : undefined;
-    result[1] = title || undefined;
-    result[2] = weight || undefined;
-    console.log(result);
-  } */
 }

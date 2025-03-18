@@ -32,10 +32,6 @@ export class InputBuilder extends ElementBuilder {
   public setType(value: string): void {
     this.element.type = value;
   }
-
-  public getElement(): HTMLInputElement {
-    return this.element;
-  }
 }
 
 export interface LabelParameters extends Parameters {
@@ -89,9 +85,5 @@ export class AnchorBuilder extends ElementBuilder {
 
   public setHref(value: string): void {
     this.element.href = value;
-  }
-
-  public getElement(): HTMLAnchorElement {
-    return this.element;
   }
 }

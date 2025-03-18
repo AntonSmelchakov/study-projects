@@ -4,7 +4,7 @@ import ElementBuilder from '../../utils/element-builder';
 import type { InputParameters } from '../../utils/other-builder';
 import { InputBuilder } from '../../utils/other-builder';
 import type Index from '../main/index';
-import cssClases from './paste-modal.module.css';
+import cssClasses from './paste-modal.module.css';
 
 type ParameterItem = {
   [key: string]: Parameters | InputParameters;
@@ -15,15 +15,15 @@ type ValidPasteData = [string, number][];
 const ELEM_PARAMS: ParameterItem = {
   dialog: {
     tag: 'dialog',
-    classNames: [cssClases.dialog],
+    classNames: [cssClasses.dialog],
   },
   container: {
     tag: 'form',
-    classNames: [cssClases.container],
+    classNames: [cssClasses.container],
   },
   inputField: {
     tag: 'textarea',
-    classNames: [cssClases.inputField],
+    classNames: [cssClasses.inputField],
     placeholder:
       'Past a list of the new options in a CSV-like format, as shown below. Title allows whitespaces,quotes and commas that is separated from weight by comma.\n\nTitle_1_with_commas_quotes_or_whitespaces , weight_as_number\nTitle_2_with_commas_quotes_or_whitespaces , weight_as_number',
   },
@@ -80,25 +80,23 @@ export default class PasteModal extends ComplexElement {
   }
 
   protected close(): void {
-    const item = this.getElement();
+    const item = this.getElement<HTMLDialogElement>();
     this.getElement().remove();
-    if (item instanceof HTMLDialogElement) item.close();
+    item.close();
   }
 
   protected configureConfirmBtn(): void {
     this.confirmBtn.getElement().addEventListener('click', (event) => {
       console.log('hey');
       event.preventDefault();
-      const item = this.pasteField.getElement();
+      const item = this.pasteField.getElement<HTMLTextAreaElement>();
       const pasteData: ValidPasteData = [];
-      if (item instanceof HTMLTextAreaElement) {
-        const values = item.value.split('\n');
-        for (const item of values) {
-          const separateComma = item.lastIndexOf(',');
-          const newTitle = item.slice(0, separateComma).trim();
-          const newWeight = +item.slice(separateComma + 1).trim();
-          pasteData.push([newTitle, newWeight]);
-        }
+      const values = item.value.split('\n');
+      for (const item of values) {
+        const separateComma = item.lastIndexOf(',');
+        const newTitle = item.slice(0, separateComma).trim();
+        const newWeight = +item.slice(separateComma + 1).trim();
+        pasteData.push([newTitle, newWeight]);
       }
       if (PasteModal.isValidPasteData(pasteData)) {
         this.pasteData = pasteData;

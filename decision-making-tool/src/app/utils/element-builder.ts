@@ -20,14 +20,20 @@ export default class ElementBuilder {
     this.configureElement(parameters);
   }
 
+  public static isHTMLType<Type extends HTMLElement>(element: HTMLElement): element is Type {
+    return !!element;
+  }
+
   public configureElement(parameters: Parameters): void {
     if (parameters.id) this.setId(parameters.id);
     if (parameters.classNames) this.setCssClasses(parameters.classNames);
     if (parameters.textContent) this.setTextContent(parameters.textContent);
   }
 
-  public getElement(): HTMLTypes {
-    return this.element;
+  public getElement<Type extends HTMLElement>(): Type {
+    const result = this.element;
+    if (ElementBuilder.isHTMLType<Type>(result)) return result;
+    throw new Error('Wrong type parameter in getElement method');
   }
 
   public setId(id: string): void {

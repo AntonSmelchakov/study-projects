@@ -117,11 +117,9 @@ export default class Index extends ComplexElement {
 
   protected configurePasteBtn(): void {
     this.pasteBtn.addEventListener('click', () => {
-      const item = this.pasteModal.getElement();
+      const item = this.pasteModal.getElement<HTMLDialogElement>();
       this.append([this.pasteModal]);
-      if (item instanceof HTMLDialogElement) {
-        item.showModal();
-      }
+      item.showModal();
     });
   }
 
@@ -138,7 +136,7 @@ export default class Index extends ComplexElement {
       const stateData = this.stateHandler.getState('string');
       if (typeof stateData !== 'string') return;
       const fileMimeType = 'application/json';
-      const fileName = uploadAnchor.getElement().download;
+      const fileName = uploadAnchor.getElement<HTMLAnchorElement>().download;
       const fileType = 'json';
       const data: File = new File([stateData], fileName + '.' + fileType, { type: fileMimeType });
       const url: string = URL.createObjectURL(data);
@@ -154,7 +152,7 @@ export default class Index extends ComplexElement {
     });
     this.fileInput.addEventListener('change', () => {
       void (async (): Promise<void> => {
-        const data: FileList | null = this.fileInput.getElement().files;
+        const data: FileList | null = this.fileInput.getElement<HTMLInputElement>().files;
         if (!(data && data.length > 0)) return;
         const myFile = data[0];
         let myData: string;
@@ -174,11 +172,9 @@ export default class Index extends ComplexElement {
     this.startBtn.addEventListener('click', () => {
       const isOptionsValid = this.optionsValidation();
       if (!isOptionsValid) {
-        const item = this.invalidModal.getElement();
+        const item = this.invalidModal.getElement<HTMLDialogElement>();
         this.append([this.invalidModal]);
-        if (item instanceof HTMLDialogElement) {
-          item.showModal();
-        }
+        item.showModal();
       }
     });
   }

@@ -60,8 +60,8 @@ export default class InvalidModal extends ComplexElement {
   }
 
   protected close(): void {
-    const item = this.getElement();
+    const item = this.getElement<HTMLDialogElement>();
     this.getElement().remove();
-    if (item instanceof HTMLDialogElement) item.close();
+    item.close();
   }
 }

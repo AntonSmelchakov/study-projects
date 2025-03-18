@@ -1,4 +1,4 @@
-import type { Parameters, HTMLTypes } from './element-builder';
+import type { Parameters } from './element-builder';
 import ElementBuilder from './element-builder';
 
 export default class ComplexElement {
@@ -7,8 +7,8 @@ export default class ComplexElement {
     this.builder = new ElementBuilder(parameters);
   }
 
-  public getElement(): HTMLTypes {
-    return this.builder.getElement();
+  public getElement<Type extends HTMLElement>(): Type {
+    return this.builder.getElement<Type>();
   }
 
   public append(childElements: (ElementBuilder | ComplexElement)[]): void {
