@@ -15,6 +15,7 @@ type ParameterItem = {
 };
 
 const ELEM_PARAMS: ParameterItem = {
+  appTitle: { tag: 'h1', classNames: ['title'], textContent: 'Decision making tool 0.5' },
   taskList: { tag: 'ul', classNames: ['taskList'] },
   addOptionBtn: {
     tag: 'button',
@@ -40,6 +41,7 @@ const ELEM_PARAMS: ParameterItem = {
 };
 
 export default class Index extends ComplexElement {
+  public appTitle: ElementBuilder;
   public taskList: ElementBuilder;
   public addOptionBtn: ElementBuilder;
   public pasteBtn: ElementBuilder;
@@ -55,6 +57,7 @@ export default class Index extends ComplexElement {
 
   constructor(stateHandler: StateHandler) {
     super({ tag: 'section', classNames: ['index'] });
+    this.appTitle = new ElementBuilder(ELEM_PARAMS.appTitle);
     this.taskList = new ElementBuilder(ELEM_PARAMS.taskList);
     this.addOptionBtn = new ElementBuilder(ELEM_PARAMS.addOptionBtn);
     this.pasteBtn = new ElementBuilder(ELEM_PARAMS.pasteBtn);
@@ -72,6 +75,7 @@ export default class Index extends ComplexElement {
 
   public configureIndex(): void {
     this.append([
+      this.appTitle,
       this.taskList,
       this.addOptionBtn,
       this.pasteBtn,
