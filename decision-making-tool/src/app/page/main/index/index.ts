@@ -1,3 +1,4 @@
+import type Router from '../../../router/router';
 import type StateHandler from '../../../state-handler/state-handler';
 import type { DataItem } from '../../../state-handler/state-handler';
 import ComplexElement from '../../../utils/complex-element';
@@ -15,6 +16,7 @@ type ParameterItem = {
 };
 
 const ELEM_PARAMS: ParameterItem = {
+  index: { tag: 'section', classNames: ['index'] },
   appTitle: { tag: 'h1', classNames: ['title'], textContent: 'Decision making tool 0.5' },
   taskList: { tag: 'ul', classNames: ['taskList'] },
   addOptionBtn: {
@@ -53,10 +55,11 @@ export default class Index extends ComplexElement {
   public pasteModal: PasteModal;
   public invalidModal: InvalidModal;
   public stateHandler: StateHandler;
+  public router: Router;
   public fileInput: InputBuilder;
 
-  constructor(stateHandler: StateHandler) {
-    super({ tag: 'section', classNames: ['index'] });
+  constructor(stateHandler: StateHandler, router: Router) {
+    super(ELEM_PARAMS.index);
     this.appTitle = new ElementBuilder(ELEM_PARAMS.appTitle);
     this.taskList = new ElementBuilder(ELEM_PARAMS.taskList);
     this.addOptionBtn = new ElementBuilder(ELEM_PARAMS.addOptionBtn);
@@ -70,6 +73,7 @@ export default class Index extends ComplexElement {
     this.pasteModal = new PasteModal(this);
     this.invalidModal = new InvalidModal();
     this.stateHandler = stateHandler;
+    this.router = router;
     this.configureIndex();
   }
 
@@ -171,7 +175,9 @@ export default class Index extends ComplexElement {
   protected configureStartBtn(): void {
     this.startBtn.addEventListener('click', () => {
       const isOptionsValid = this.optionsValidation();
-      if (!isOptionsValid) {
+      if (isOptionsValid) {
+        this.router.switchPageTo('picker');
+      } else {
         const item = this.invalidModal.getElement<HTMLDialogElement>();
         this.append([this.invalidModal]);
         item.showModal();
@@ -181,7 +187,6 @@ export default class Index extends ComplexElement {
 
   protected optionsValidation(): boolean {
     const data = this.stateHandler.getState('object');
-    console.log(data);
     let check: number = 0;
     if (typeof data === 'object') {
       const array = Object.entries(data);
