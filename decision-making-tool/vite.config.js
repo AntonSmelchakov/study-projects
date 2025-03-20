@@ -12,7 +12,7 @@ export default defineConfig({
     outDir: './build',
   },
   server: {
-    open: './src/index.html',
+    open: './index.html',
   },
   publicDir: './src/public',
 });

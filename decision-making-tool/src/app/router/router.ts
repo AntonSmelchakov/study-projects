@@ -1,36 +1,26 @@
 import type Main from '../page/main/main';
 
-const PAGES = {
-  index: 'index',
-  picker: 'picker',
-  notFound: 'notFound',
-} as const;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const pageEntries = Object.values(PAGES);
-
-type Pages = (typeof pageEntries)[number];
+type Pages = 'index' | 'picker';
 
 function isValidPage(pageName: string): pageName is Pages {
-  return !!pageName;
+  return pageName === 'index' || pageName === 'picker';
 }
 
 export default class Router {
-  /*   protected index: Index | undefined;
-  protected picker: Picker | undefined; */
   protected main: Main | undefined;
 
   constructor() {
-    /*     this.index = undefined;
-    this.picker = undefined; */
     this.main = undefined;
   }
 
   private static parseUrl(pathName: string, hash: string): string {
-    let pointIndex = pathName.lastIndexOf('.');
-    if (pointIndex < 0) pointIndex = 0;
+    console.log(pathName, hash);
+    let pointIndex: number | undefined = pathName.lastIndexOf('.');
+    if (pointIndex < 0) pointIndex = undefined;
     const symbolIndex = hash ? '#' : '/';
-    return pathName.slice(pathName.lastIndexOf(symbolIndex) + 1, pointIndex);
+    const targetString = hash || pathName;
+    const result = targetString.slice(targetString.lastIndexOf(symbolIndex) + 1, pointIndex);
+    return result;
   }
 
   private static setHistory(url: string): void {
@@ -40,26 +30,33 @@ export default class Router {
   public configureRouter(main: Main): void {
     this.main = main;
     this.configureHistoryHandler();
+    this.navigate();
   }
 
-  public switchPageTo(page: Pages): void {
-    console.log('switch');
+  public switchPageTo(page: Pages | 'not-found'): void {
     if (!this.main) return;
-    if (this.main[page]) this.main.getElement().replaceChildren(this.main[page].getElement());
+    console.log(isValidPage(page), page);
+    if (isValidPage(page)) this.main.getElement().replaceChildren(this.main[page].getElement());
+    else this.main.getElement().replaceChildren(this.main.notFound.getElement());
   }
 
   private configureHistoryHandler(): void {
-    console.log('POOP');
+    globalThis.addEventListener('DOMContentLoaded', () => {
+      this.navigate();
+    });
+  }
+
+  private navigate(): void {
     const pathName = globalThis.location.pathname;
     const hash = globalThis.location.hash;
     const targetPage = Router.parseUrl(pathName, hash);
+    console.log(targetPage);
     Router.setHistory(targetPage);
-    globalThis.addEventListener('popstate', () => {
-      console.log('hey');
-      console.log(pathName, hash, targetPage);
-      if (isValidPage(targetPage)) this.switchPageTo(targetPage);
-      else this.switchPageTo('notFound');
-      Router.setHistory(targetPage);
-    });
+    if (isValidPage(targetPage)) this.switchPageTo(targetPage);
+    else if (targetPage) {
+      this.switchPageTo('not-found');
+    } else {
+      this.switchPageTo('index');
+    }
   }
 }
