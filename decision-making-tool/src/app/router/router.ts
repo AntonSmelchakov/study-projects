@@ -13,8 +13,9 @@ export default class Router {
     this.main = undefined;
   }
 
-  private static parseUrl(pathName: string, hash: string): string {
-    console.log(pathName, hash);
+  private static parseUrl(): string {
+    const pathName = globalThis.location.pathname;
+    const hash = globalThis.location.hash;
     let pointIndex: number | undefined = pathName.lastIndexOf('.');
     if (pointIndex < 0) pointIndex = undefined;
     const symbolIndex = hash ? '#' : '/';
@@ -30,29 +31,31 @@ export default class Router {
   public configureRouter(main: Main): void {
     this.main = main;
     this.configureHistoryHandler();
-    this.navigate();
   }
 
-  public switchPageTo(page: Pages | 'not-found'): void {
+  public switchPageTo(page: Pages | 'not-found', isHistorySet: boolean = true): void {
     if (!this.main) return;
     console.log(isValidPage(page), page);
     if (isValidPage(page)) this.main.getElement().replaceChildren(this.main[page].getElement());
-    else this.main.getElement().replaceChildren(this.main.notFound.getElement());
+    else {
+      this.main.getElement().replaceChildren(this.main.notFound.getElement());
+    }
+    if (isHistorySet) Router.setHistory(page);
   }
 
   private configureHistoryHandler(): void {
     globalThis.addEventListener('DOMContentLoaded', () => {
+      this.navigate(false);
+    });
+    globalThis.addEventListener('popstate', () => {
       this.navigate();
     });
   }
 
-  private navigate(): void {
-    const pathName = globalThis.location.pathname;
-    const hash = globalThis.location.hash;
-    const targetPage = Router.parseUrl(pathName, hash);
+  private navigate(isHistorySet: boolean = true): void {
+    const targetPage = Router.parseUrl();
     console.log(targetPage);
-    Router.setHistory(targetPage);
-    if (isValidPage(targetPage)) this.switchPageTo(targetPage);
+    if (isValidPage(targetPage)) this.switchPageTo(targetPage, isHistorySet);
     else if (targetPage) {
       this.switchPageTo('not-found');
     } else {
