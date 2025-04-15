@@ -1,0 +1,5 @@
+{
+  "*.{css}": "stylelint 'src/**/*.css'",
+  "*.{js,ts}": "eslint 'src/'",
+  "*.{js,ts,css}": "prettier --write 'src/'"
+}

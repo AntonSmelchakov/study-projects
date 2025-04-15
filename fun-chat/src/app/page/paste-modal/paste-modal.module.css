@@ -1,0 +1,17 @@
+.dialog {
+  margin: auto;
+}
+
+.container {
+  width: 80vh;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputField {
+  resize: none;
+  width: 100%;
+  height: 40vh;
+  text-align: start;
+}
