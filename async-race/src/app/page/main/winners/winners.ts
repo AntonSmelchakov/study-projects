@@ -24,7 +24,6 @@ export default class Winners extends ComplexElement<HTMLElement> {
     this.backBtn = new ElementBuilder(ELEM_PARAMS.backBtn);
     this.stateHandler = stateHandler;
     this.router = router;
-    console.log(this.stateHandler, this.router);
     this.configurePicker();
   }
 

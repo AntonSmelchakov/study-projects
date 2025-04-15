@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+import ApiHandler from '../../../api-handler/api-handler';
 import type Router from '../../../router/router';
 import type StateHandler from '../../../state-handler/state-handler';
 import type { ElementList } from '../../../types/types';
@@ -6,6 +8,12 @@ import ElementBuilder from '../../../utils/element-builder';
 import './style.css';
 
 const ELEM_PARAMS: ElementList = {
+  garage: {
+    tag: 'section',
+    properties: {
+      className: 'garage',
+    },
+  },
   winnersBtn: {
     tag: 'button',
     properties: {
@@ -121,28 +129,23 @@ export default class Garage extends ComplexElement<HTMLElement> {
   }
 
   public configureWinnersBtn(): void {
-    console.log(this);
+    this.winnersBtn.addEventListener('click', () => {
+      void (async (): Promise<void> => {
+        const result = await ApiHandler.startStopEngine({ id: 1, status: 'stopped' });
+        console.log(result);
+      })();
+    });
   }
 
-  public configureCreateBtn(): void {
-    console.log(this);
-  }
+  public configureCreateBtn(): void {}
 
-  public configureUpdateBtn(): void {
-    console.log(this);
-  }
+  public configureUpdateBtn(): void {}
 
-  public configureRaceBtn(): void {
-    console.log(this);
-  }
+  public configureRaceBtn(): void {}
 
-  public configureResetBtn(): void {
-    console.log(this);
-  }
+  public configureResetBtn(): void {}
 
-  public configureGenerateBtn(): void {
-    console.log(this);
-  }
+  public configureGenerateBtn(): void {}
 
   /*   public configureTaskList(): void {
     this.taskList.getElement().replaceChildren();
