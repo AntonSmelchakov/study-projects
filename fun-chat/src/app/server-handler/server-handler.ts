@@ -184,6 +184,10 @@ const SERVER_REQUEST_DATA = {
   },
 };
 
+if (SERVER_REQUEST_DATA) {
+  /* empty */
+}
+
 export type PayloadType = {
   [K in keyof typeof CLIENT_REQUEST_DATA]: (typeof CLIENT_REQUEST_DATA)[K]['payload'];
 };

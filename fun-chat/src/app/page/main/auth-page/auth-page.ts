@@ -69,7 +69,7 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
   private stateHandler: StateHandler;
   private router: Router;
   private serverHandler: ServerHandler;
-  private lastLoginId: number | undefined;
+  /*   private lastLoginId: number | undefined; */
 
   constructor(stateHandler: StateHandler, router: Router, serverHandler: ServerHandler) {
     super(ELEM_PARAMS.authPage);
