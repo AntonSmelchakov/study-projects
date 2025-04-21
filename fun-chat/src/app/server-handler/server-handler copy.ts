@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:3000';
+const BASE_URL = 'http://127.0.0.1:4000';
 const API_DATA = {
   getCars: {
     path: '/garage',
@@ -67,7 +67,7 @@ interface ApiArguments {
   apiBody?: string;
 }
 
-export default class ApiHandler {
+export default class ServerHandler {
   constructor() {}
 
   public static constructParameters(values: Record<string, string | number>): string {
@@ -95,7 +95,7 @@ export default class ApiHandler {
   }
 
   public static async getCars(queryParameters: GetCarsArguments = {}): Promise<CarData[]> {
-    const result = await ApiHandler.useApi<CarData[]>({
+    const result = await ServerHandler.useApi<CarData[]>({
       apiPath: API_DATA.getCars.path,
       apiMethod: API_DATA.getCars.method,
       queryParameters: this.constructParameters(queryParameters),
@@ -104,7 +104,7 @@ export default class ApiHandler {
   }
 
   public static async getCar(id: number): Promise<CarData> {
-    const result = await ApiHandler.useApi<CarData>({
+    const result = await ServerHandler.useApi<CarData>({
       apiPath: `${API_DATA.getCars.path}/${id}`,
       apiMethod: API_DATA.getCars.method,
     });
@@ -112,7 +112,7 @@ export default class ApiHandler {
   }
 
   public static async createCar(CarData: CreateCarArguments): Promise<CarData> {
-    const result = await ApiHandler.useApi<CarData>({
+    const result = await ServerHandler.useApi<CarData>({
       apiPath: API_DATA.createCar.path,
       apiMethod: API_DATA.createCar.method,
       apiHeaders: API_DATA.createCar.header,
@@ -122,14 +122,14 @@ export default class ApiHandler {
   }
 
   public static async deleteCar(id: number): Promise<void> {
-    await ApiHandler.useApi<void>({
+    await ServerHandler.useApi<void>({
       apiPath: `${API_DATA.deleteCar.path}/${id}`,
       apiMethod: API_DATA.deleteCar.method,
     });
   }
 
   public static async updateCar(id: number, CarData: CreateCarArguments): Promise<CarData> {
-    const result = await ApiHandler.useApi<CarData>({
+    const result = await ServerHandler.useApi<CarData>({
       apiPath: `${API_DATA.updateCar.path}/${id}`,
       apiMethod: API_DATA.updateCar.method,
       apiHeaders: API_DATA.updateCar.header,
@@ -143,7 +143,7 @@ export default class ApiHandler {
   ): Promise<MovementData> {
     const id = queryParameters.id;
     const status = queryParameters.status;
-    const result = await ApiHandler.useApi<MovementData>({
+    const result = await ServerHandler.useApi<MovementData>({
       apiPath: API_DATA.startStopEngine.path,
       apiMethod: API_DATA.startStopEngine.method,
       queryParameters: this.constructParameters({ id, status }),

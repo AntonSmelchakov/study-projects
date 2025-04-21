@@ -14,9 +14,13 @@ function isValidJSON(incomingJSON: unknown): incomingJSON is ValidJSON {
 }
 
 export default class StateHandler {
+  public isLoggedIn: boolean;
+  public login: string | undefined;
+  public password: string | undefined;
   protected state: ValidJSON | undefined;
 
   constructor() {
+    this.isLoggedIn = false;
     this.state = undefined;
     this.configureStateStorage();
   }

@@ -18,6 +18,11 @@ export default tseslint.config(
     },
   },
   {
+    linterOptions: {
+      noInlineConfig: true,
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -29,6 +34,8 @@ export default tseslint.config(
       '@typescript-eslint/member-ordering': 'error',
       'class-methods-use-this': 'error',
       'unicorn/better-regex': 'warn',
+      'unicorn/prefer-includes': 'off',
+      'unicorn/no-null': 'off',
     },
   },
 );

@@ -1,19 +1,30 @@
 import type Main from '../page/main/main';
+import type ServerHandler from '../server-handler/server-handler';
+import type StateHandler from '../state-handler/state-handler';
 
-const pages = ['garage', 'winners'] as const;
+export enum PagesEnum {
+  authPage = 'auth-page',
+  chat = 'chat',
+  about = 'about',
+  notFound = 'not-found',
+}
 
-type Pages = (typeof pages)[number];
+const pagesValues: string[] = Object.values(PagesEnum);
+/* const pagesKeys = Object.keys(PagesEnum); */
 
-function isValidPage(pageName: string): pageName is Pages {
-  // eslint-disable-next-line unicorn/prefer-includes
-  return pages.some((x) => pageName === x);
+function isValidPage(pageName: string): pageName is PagesEnum {
+  return pagesValues.includes(pageName);
 }
 
 export default class Router {
   protected main: Main | undefined;
+  protected stateHandler: StateHandler;
+  protected serverHandler: ServerHandler;
 
-  constructor() {
+  constructor(serverHandler: ServerHandler, stateHandler: StateHandler) {
     this.main = undefined;
+    this.serverHandler = serverHandler;
+    this.stateHandler = stateHandler;
   }
 
   private static parseUrl(): string {
@@ -36,13 +47,18 @@ export default class Router {
     this.configureHistoryHandler();
   }
 
-  public switchPageTo(page: Pages | 'not-found', isHistorySet: boolean = true): void {
+  public switchPageTo(page: PagesEnum, isHistorySet: boolean = true): void {
     if (!this.main) return;
-    if (isValidPage(page)) this.main.getElement().replaceChildren(this.main[page].getElement());
-    else {
-      this.main.getElement().replaceChildren(this.main.notFound.getElement());
-    }
+    const target = pagesValues.indexOf(page);
+    this.main.getElement().replaceChildren(this.main.pages[target].getElement());
     if (isHistorySet) Router.setHistory(page);
+    if (page === PagesEnum.chat) {
+      this.main.header.toggleHeader(true);
+      this.main.footer.toggleFooter(true);
+    } else {
+      this.main.header.toggleHeader(false);
+      this.main.footer.toggleFooter(false);
+    }
   }
 
   private configureHistoryHandler(): void {
@@ -57,11 +73,14 @@ export default class Router {
   private navigate(isHistorySet: boolean = true): void {
     const targetPage = Router.parseUrl();
     console.log(targetPage);
-    if (isValidPage(targetPage)) this.switchPageTo(targetPage, isHistorySet);
-    else if (targetPage) {
-      this.switchPageTo('not-found');
-    } else {
-      this.switchPageTo('garage');
-    }
+    if (isValidPage(targetPage)) {
+      if (this.stateHandler.isLoggedIn && targetPage === PagesEnum.authPage)
+        this.switchPageTo(PagesEnum.chat, isHistorySet);
+      if (!this.stateHandler.isLoggedIn && targetPage === PagesEnum.chat)
+        this.switchPageTo(PagesEnum.authPage, isHistorySet);
+      this.switchPageTo(targetPage, isHistorySet);
+    } else if (targetPage === '' || targetPage === 'index') {
+      this.switchPageTo(PagesEnum.authPage, isHistorySet);
+    } else this.switchPageTo(PagesEnum.notFound, isHistorySet);
   }
 }
