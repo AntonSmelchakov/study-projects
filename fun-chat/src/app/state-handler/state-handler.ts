@@ -3,10 +3,14 @@ export interface DataItem {
   weight?: string;
 }
 
-export type ValidJSON = { [id: number]: DataItem };
+export interface ValidJSON {
+  login: string;
+  password: string;
+  isLoggedIn: boolean;
+}
 
 const STORAGE_KEYS = {
-  optionDataKey: 'optionState',
+  loginData: 'loginData',
 };
 
 function isValidJSON(incomingJSON: unknown): incomingJSON is ValidJSON {
@@ -25,7 +29,7 @@ export default class StateHandler {
     this.configureStateStorage();
   }
 
-  public setState(data: unknown): void {
+  /*   public setState(data: unknown): void {
     if (isValidJSON(data)) {
       this.state = data;
     }
@@ -59,22 +63,34 @@ export default class StateHandler {
   public setOptionWeight(id: number, value: string): void {
     if (!this.state) return;
     this.state[id].weight = value;
+  } */
+
+  public setState(loginStatus: boolean = true): void {
+    if (this.isLoggedIn) {
+      const loginData = {
+        login: this.login,
+        password: this.password,
+        isLoggedIn: loginStatus,
+      };
+      globalThis.sessionStorage.setItem(STORAGE_KEYS.loginData, JSON.stringify(loginData));
+    } else globalThis.sessionStorage.clear();
   }
 
   protected stateInit(): void {
-    const defaultState: ValidJSON = { 1: { title: '', weight: '' } };
-    const localOptionData: string | null = globalThis.localStorage.getItem(
-      STORAGE_KEYS.optionDataKey,
-    );
-    let result: unknown;
-    if (localOptionData) result = JSON.parse(localOptionData);
-    this.state = isValidJSON(result) ? result : defaultState;
+    const sessionData: string | null = globalThis.sessionStorage.getItem(STORAGE_KEYS.loginData);
+    let loginData: unknown;
+    if (sessionData) loginData = JSON.parse(sessionData);
+    if (isValidJSON(loginData)) {
+      this.login = loginData.login;
+      this.password = loginData.password;
+      this.isLoggedIn = loginData.isLoggedIn;
+    }
   }
 
   protected configureStateStorage(): void {
     this.stateInit();
     window.addEventListener('beforeunload', () => {
-      localStorage.setItem(STORAGE_KEYS.optionDataKey, JSON.stringify(this.state));
+      this.setState();
     });
   }
 }

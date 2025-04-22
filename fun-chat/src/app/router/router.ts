@@ -5,7 +5,7 @@ import type StateHandler from '../state-handler/state-handler';
 export enum PagesEnum {
   authPage = 'auth-page',
   chat = 'chat',
-  about = 'about',
+  /*   about = 'about', */
   notFound = 'not-found',
 }
 
@@ -63,7 +63,7 @@ export default class Router {
 
   private configureHistoryHandler(): void {
     globalThis.addEventListener('DOMContentLoaded', () => {
-      this.navigate(false);
+      this.navigate();
     });
     globalThis.addEventListener('popstate', () => {
       this.navigate();
@@ -71,7 +71,19 @@ export default class Router {
   }
 
   private navigate(isHistorySet: boolean = true): void {
-    const targetPage = Router.parseUrl();
+    const parsedPage = Router.parseUrl();
+    let targetPage: PagesEnum;
+    if (isValidPage(parsedPage)) targetPage = parsedPage;
+    else if (parsedPage === '' || parsedPage === 'index') targetPage = PagesEnum.authPage;
+    else targetPage = PagesEnum.notFound;
+
+    if (this.stateHandler.isLoggedIn && targetPage === PagesEnum.authPage)
+      this.switchPageTo(PagesEnum.chat, isHistorySet);
+    else if (!this.stateHandler.isLoggedIn && targetPage === PagesEnum.chat)
+      this.switchPageTo(PagesEnum.authPage, isHistorySet);
+    else this.switchPageTo(targetPage, isHistorySet);
+
+    /*     const targetPage = Router.parseUrl();
     console.log(targetPage);
     if (isValidPage(targetPage)) {
       if (this.stateHandler.isLoggedIn && targetPage === PagesEnum.authPage)
@@ -81,6 +93,6 @@ export default class Router {
       this.switchPageTo(targetPage, isHistorySet);
     } else if (targetPage === '' || targetPage === 'index') {
       this.switchPageTo(PagesEnum.authPage, isHistorySet);
-    } else this.switchPageTo(PagesEnum.notFound, isHistorySet);
+    } else this.switchPageTo(PagesEnum.notFound, isHistorySet); */
   }
 }

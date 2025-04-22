@@ -1,3 +1,4 @@
+import type LoginHandler from '../../login-handler/login-handler';
 import type Router from '../../router/router';
 import type { ServerPayloadType } from '../../server-handler/server-handler';
 import ServerHandler from '../../server-handler/server-handler';
@@ -28,11 +29,16 @@ export default class Main extends ComplexElement<HTMLElement> {
   public header: Header;
   public footer: Footer;
 
-  constructor(stateHandler: StateHandler, router: Router, serverHandler: ServerHandler) {
+  constructor(
+    stateHandler: StateHandler,
+    router: Router,
+    serverHandler: ServerHandler,
+    loginHandler: LoginHandler,
+  ) {
     super({ tag: 'main', properties: { className: 'main' } });
-    this.authPage = new AuthPage(stateHandler, router, serverHandler);
-    this.chat = new Chat(serverHandler);
-    this.notFound = new NotFound(router);
+    this.authPage = new AuthPage(stateHandler, router, serverHandler, loginHandler);
+    this.chat = new Chat(serverHandler, stateHandler);
+    this.notFound = new NotFound(router, stateHandler);
     this.errorMsg = new ElementBuilder(ELEM_PARAMS.errorMsg);
     this.header = new Header(serverHandler, stateHandler);
     this.footer = new Footer();

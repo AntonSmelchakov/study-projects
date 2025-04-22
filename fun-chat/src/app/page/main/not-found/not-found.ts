@@ -1,5 +1,6 @@
 import type Router from '../../../router/router';
 import { PagesEnum } from '../../../router/router';
+import type StateHandler from '../../../state-handler/state-handler';
 import ComplexElement from '../../../utils/complex-element';
 import ElementBuilder from '../../../utils/element-builder';
 
@@ -21,9 +22,12 @@ const ELEM_PARAMS = {
 export default class NotFound extends ComplexElement<HTMLElement> {
   protected backBtn;
   protected router: Router;
-  constructor(router: Router) {
+  protected stateHandler: StateHandler;
+
+  constructor(router: Router, stateHandler: StateHandler) {
     super(ELEM_PARAMS.notFound);
     this.router = router;
+    this.stateHandler = stateHandler;
     this.backBtn = new ElementBuilder(ELEM_PARAMS.backBtn);
     this.configureNotFound();
   }
@@ -31,7 +35,8 @@ export default class NotFound extends ComplexElement<HTMLElement> {
   public configureNotFound(): void {
     this.append([this.backBtn]);
     this.backBtn.addEventListener('click', () => {
-      this.router.switchPageTo(PagesEnum.authPage);
+      const target = this.stateHandler.isLoggedIn ? PagesEnum.chat : PagesEnum.authPage;
+      this.router.switchPageTo(target);
     });
   }
 }

@@ -1,3 +1,4 @@
+import type LoginHandler from '../../../login-handler/login-handler';
 import type Router from '../../../router/router';
 import { PagesEnum } from '../../../router/router';
 import type ServerHandler from '../../../server-handler/server-handler';
@@ -69,13 +70,20 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
   private stateHandler: StateHandler;
   private router: Router;
   private serverHandler: ServerHandler;
+  private loginHandler: LoginHandler;
   /*   private lastLoginId: number | undefined; */
 
-  constructor(stateHandler: StateHandler, router: Router, serverHandler: ServerHandler) {
+  constructor(
+    stateHandler: StateHandler,
+    router: Router,
+    serverHandler: ServerHandler,
+    loginHandler: LoginHandler,
+  ) {
     super(ELEM_PARAMS.authPage);
     this.stateHandler = stateHandler;
     this.serverHandler = serverHandler;
     this.router = router;
+    this.loginHandler = loginHandler;
     this.nameInput = new ElementBuilder<HTMLInputElement>(ELEM_PARAMS.nameInput);
     this.nameInputHint = new ElementBuilder(ELEM_PARAMS.nameInputHint);
     this.passwordInput = new ElementBuilder<HTMLInputElement>(ELEM_PARAMS.passwordInput);
@@ -97,6 +105,7 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
     this.configureConfirmBtn();
     this.configureLoginInput();
     this.configurePasswordInput();
+    /*     this.configureLoginProcess(); */
   }
 
   protected configureLoginInput(): void {
@@ -107,8 +116,13 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
       if (result.length < 4) message.push('at least 4 characters');
       if (result.length > 12) message.push('no more than 12 characters');
       if (!testPattern.test(result)) message.push('letters and numbers only');
-      if (message.length === 1 || result === '') this.nameInputHint.getElement().textContent = '';
-      else this.nameInputHint.getElement().textContent = message.join(' ');
+      if (message.length === 1) {
+        this.nameInputHint.getElement().textContent = '';
+        this.confirmBtn.getElement().removeAttribute('disabled');
+      } else {
+        this.nameInputHint.getElement().textContent = message.join(' ');
+        this.confirmBtn.getElement().setAttribute('disabled', 'true');
+      }
     });
   }
 
@@ -125,9 +139,13 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
       if (!testPatternCapitalLetter.test(result)) message.push('at least 1 capital letter');
       if (!testPatternSmallLetter.test(result)) message.push('at least 1 small letter');
       if (testPatternSpecial.test(result)) message.push('no special characters');
-      if (message.length === 1 || result === '')
+      if (message.length === 1) {
         this.passwordInputHint.getElement().textContent = '';
-      else this.passwordInputHint.getElement().textContent = message.join(' ');
+        this.confirmBtn.getElement().removeAttribute('disabled');
+      } else {
+        this.passwordInputHint.getElement().textContent = message.join(' ');
+        this.confirmBtn.getElement().setAttribute('disabled', 'true');
+      }
     });
   }
 
@@ -135,34 +153,38 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
     this.confirmBtn.getElement().addEventListener('click', () => {
       this.login();
     });
-    globalThis.addEventListener('keydown', (event) => {
+    this.element.getElement().addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         this.login();
       }
     });
+    this.confirmBtn.getElement().setAttribute('disabled', 'true');
   }
 
-  protected login(): void {
-    this.serverHandler.userAuth({
-      user: {
-        login: this.nameInput.getElement().value,
-        password: this.passwordInput.getElement().value,
-      },
+  /*   protected configureLoginProcess(): void {
+    globalThis.addEventListener('userAuthGood', (event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const data: unknown = event.detail;
+      if (ServerHandler.isValidData<ServerPayloadType['userAuth']>(data)) {
+        this.stateHandler.login = this.nameInput.getElement().value;
+        this.stateHandler.password = this.passwordInput.getElement().value;
+        this.stateHandler.isLoggedIn = true;
+        this.router.switchPageTo(PagesEnum.chat);
+      }
     });
-    this.stateHandler.login = this.nameInput.getElement().value;
-    this.stateHandler.password = this.passwordInput.getElement().value;
+  } */
+
+  protected login(): void {
+    this.loginHandler.loginInit(
+      this.nameInput.getElement().value,
+      this.passwordInput.getElement().value,
+    );
     this.router.switchPageTo(PagesEnum.chat);
   }
 
   protected configureAboutBtn(): void {
     this.aboutBtn.getElement().addEventListener('click', () => {
-      /* Delet later */
-      this.serverHandler.userLogout({
-        user: {
-          login: this.nameInput.getElement().value,
-          password: this.passwordInput.getElement().value,
-        },
-      });
+      console.log('Under construction');
     });
   }
 }

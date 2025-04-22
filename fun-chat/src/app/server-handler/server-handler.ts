@@ -82,6 +82,25 @@ const CLIENT_REQUEST_DATA = {
 };
 
 const SERVER_REQUEST_DATA = {
+  msgFromUser: {
+    type: 'MSG_FROM_USER',
+    payload: {
+      messages: [
+        {
+          id: 'string',
+          from: 'string',
+          to: 'string',
+          text: 'string',
+          datetime: 1,
+          status: {
+            isDelivered: true,
+            isReaded: true,
+            isEdited: true,
+          },
+        },
+      ],
+    },
+  },
   userAuth: {
     type: 'USER_EXTERNAL_LOGIN',
     payload: {
@@ -94,14 +113,12 @@ const SERVER_REQUEST_DATA = {
   allUsers: {
     type: 'ALL_USERS',
     payload: {
-      user: {
-        users: [
-          {
-            login: 'string',
-            isLoggedIn: true,
-          },
-        ],
-      },
+      users: [
+        {
+          login: 'string',
+          isLoggedIn: true,
+        },
+      ],
     },
   },
   userLogout: {
@@ -230,7 +247,7 @@ export default class ServerHandler {
 
   protected static dispatchCustomEvent(eventName: string, data: RequestFormat): void {
     const newEvent = new CustomEvent(eventName, {
-      detail: { user: data.payload },
+      detail: data.payload,
     });
     globalThis.dispatchEvent(newEvent);
   }
@@ -249,6 +266,10 @@ export default class ServerHandler {
 
   public getInactiveUsers(): void {
     this.requestHandler(CLIENT_REQUEST_DATA.userInactive.type, null);
+  }
+
+  public fetchMessages(payload: PayloadType['msgFromUser']): number | undefined {
+    return this.requestHandler(CLIENT_REQUEST_DATA.msgFromUser.type, payload);
   }
 
   public getResponse(id: number): RequestFormat | undefined {
@@ -297,6 +318,21 @@ export default class ServerHandler {
       switch (data.type) {
         case 'ERROR': {
           ServerHandler.dispatchCustomEvent('customServerError', data);
+
+          break;
+        }
+        case CLIENT_REQUEST_DATA.userAuth.type: {
+          ServerHandler.dispatchCustomEvent('userAuthGood', data);
+
+          break;
+        }
+        case CLIENT_REQUEST_DATA.userLogout.type: {
+          ServerHandler.dispatchCustomEvent('userLogoutGood', data);
+
+          break;
+        }
+        case CLIENT_REQUEST_DATA.msgFromUser.type: {
+          ServerHandler.dispatchCustomEvent('messageHistoryReceived', data);
 
           break;
         }

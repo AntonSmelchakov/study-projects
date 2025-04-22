@@ -1,0 +1,11 @@
+.onlineSection {
+  background: green;
+}
+
+.offlineSection {
+  background: gray;
+}
+
+.hidden {
+  display: none;
+}

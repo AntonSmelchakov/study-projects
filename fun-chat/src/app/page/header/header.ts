@@ -41,6 +41,7 @@ export default class Header extends ComplexElement<HTMLElement> {
     this.serverHandler = serverHandler;
     this.stateHandler = stateHandler;
     this.configureElement();
+    this.configureLogoutBtn();
   }
 
   public setUserName(name: string): void {
@@ -57,6 +58,10 @@ export default class Header extends ComplexElement<HTMLElement> {
 
   protected configureElement(): void {
     this.element.append([this.title, this.userName, this.logoutBtn]);
+    globalThis.addEventListener('userAuthGood', () => {
+      const name = this.stateHandler.login || '';
+      this.userName.getElement().textContent = name;
+    });
   }
 
   protected configureLogoutBtn(): void {
