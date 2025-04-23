@@ -1,0 +1,17 @@
+.auth-page {
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 50%;
+}
+
+.input {
+  width: 100%;
+}
+
+.button {
+  width: 40%;
+}
+
+.input-hint {
+  width: 100%;
+}

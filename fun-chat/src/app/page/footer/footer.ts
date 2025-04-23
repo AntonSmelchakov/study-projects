@@ -1,5 +1,6 @@
 import ComplexElement from '../../utils/complex-element';
 import ElementBuilder from '../../utils/element-builder';
+import './footer.css';
 
 const ELEM_PARAMS = {
   footer: {

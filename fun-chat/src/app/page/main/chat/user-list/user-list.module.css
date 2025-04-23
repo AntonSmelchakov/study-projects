@@ -1,9 +1,26 @@
+.userList {
+  flex-direction: column;
+  height: 100%;
+  width: 30%;
+  justify-content: start;
+}
+
 .onlineSection {
   background: green;
+  flex-direction: column;
+  width: 100%;
 }
 
 .offlineSection {
   background: gray;
+  flex-direction: column;
+  width: 100%;
+}
+
+.userItem {
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .hidden {

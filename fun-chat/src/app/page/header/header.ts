@@ -2,7 +2,7 @@ import type ServerHandler from '../../server-handler/server-handler';
 import type StateHandler from '../../state-handler/state-handler';
 import ComplexElement from '../../utils/complex-element';
 import ElementBuilder from '../../utils/element-builder';
-
+import './header.css';
 const ELEM_PARAMS = {
   title: {
     tag: 'h1',

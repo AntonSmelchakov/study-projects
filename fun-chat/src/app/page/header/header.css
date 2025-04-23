@@ -1,0 +1,9 @@
+header {
+  height: 10vh;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.title {
+  height: 100%;
+}

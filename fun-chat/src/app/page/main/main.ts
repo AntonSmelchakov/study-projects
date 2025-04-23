@@ -10,6 +10,7 @@ import Header from '../header/header';
 import AuthPage from './auth-page/auth-page';
 import Chat from './chat/chat';
 import NotFound from './not-found/not-found';
+import './main.css';
 
 const ELEM_PARAMS = {
   errorMsg: {
@@ -36,7 +37,7 @@ export default class Main extends ComplexElement<HTMLElement> {
     loginHandler: LoginHandler,
   ) {
     super({ tag: 'main', properties: { className: 'main' } });
-    this.authPage = new AuthPage(stateHandler, router, serverHandler, loginHandler);
+    this.authPage = new AuthPage(loginHandler);
     this.chat = new Chat(serverHandler, stateHandler);
     this.notFound = new NotFound(router, stateHandler);
     this.errorMsg = new ElementBuilder(ELEM_PARAMS.errorMsg);
@@ -62,6 +63,10 @@ export default class Main extends ComplexElement<HTMLElement> {
       if (ServerHandler.isValidData<ServerPayloadType['error']>(data)) {
         this.errorMsg.getElement().textContent = data.error;
       }
+      this.errorMsg.getElement().classList.toggle('active-msg');
+      setTimeout(() => {
+        this.errorMsg.getElement().classList.toggle('active-msg');
+      }, 4000);
     });
   }
 }

@@ -21,6 +21,7 @@ export default class StateHandler {
   public isLoggedIn: boolean;
   public login: string | undefined;
   public password: string | undefined;
+  public currentChatWith: string | undefined;
   protected state: ValidJSON | undefined;
 
   constructor() {

@@ -138,11 +138,11 @@ const SERVER_REQUEST_DATA = {
         from: 'string',
         to: 'string',
         text: 'string',
-        datetime: 'number',
+        datetime: 1,
         status: {
-          isDelivered: 'boolean',
-          isReaded: 'boolean',
-          isEdited: 'boolean',
+          isDelivered: true,
+          isReaded: true,
+          isEdited: true,
         },
       },
     },
@@ -231,6 +231,10 @@ export default class ServerHandler {
     this.configureWebSocket();
   }
 
+  public get getState(): number {
+    return this.ws ? this.ws.readyState : -1;
+  }
+
   public static isValidData<type>(data: unknown): data is type {
     return typeof data === 'object' && data !== null;
   }
@@ -245,7 +249,7 @@ export default class ServerHandler {
     );
   }
 
-  protected static dispatchCustomEvent(eventName: string, data: RequestFormat): void {
+  public static dispatchCustomEvent(eventName: string, data: RequestFormat): void {
     const newEvent = new CustomEvent(eventName, {
       detail: data.payload,
     });
@@ -270,6 +274,10 @@ export default class ServerHandler {
 
   public fetchMessages(payload: PayloadType['msgFromUser']): number | undefined {
     return this.requestHandler(CLIENT_REQUEST_DATA.msgFromUser.type, payload);
+  }
+
+  public sendMessage(payload: PayloadType['msgSend']): void {
+    this.requestHandler(CLIENT_REQUEST_DATA.msgSend.type, payload);
   }
 
   public getResponse(id: number): RequestFormat | undefined {
@@ -333,6 +341,11 @@ export default class ServerHandler {
         }
         case CLIENT_REQUEST_DATA.msgFromUser.type: {
           ServerHandler.dispatchCustomEvent('messageHistoryReceived', data);
+
+          break;
+        }
+        case CLIENT_REQUEST_DATA.msgSend.type: {
+          ServerHandler.dispatchCustomEvent('messageReceived', data);
 
           break;
         }

@@ -1,11 +1,9 @@
 import type LoginHandler from '../../../login-handler/login-handler';
-import type Router from '../../../router/router';
-import { PagesEnum } from '../../../router/router';
-import type ServerHandler from '../../../server-handler/server-handler';
-import type StateHandler from '../../../state-handler/state-handler';
+
 import type { ElementList } from '../../../types/types';
 import ComplexElement from '../../../utils/complex-element';
 import ElementBuilder from '../../../utils/element-builder';
+import './auth-page.css';
 
 const ELEM_PARAMS: ElementList = {
   authPage: {
@@ -67,22 +65,12 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
   protected passwordInputHint: ElementBuilder<HTMLElement>;
   protected confirmBtn: ElementBuilder<HTMLElement>;
   protected aboutBtn: ElementBuilder<HTMLElement>;
-  private stateHandler: StateHandler;
-  private router: Router;
-  private serverHandler: ServerHandler;
+  protected isValidLogin = false;
+  protected isValidPassword = false;
   private loginHandler: LoginHandler;
-  /*   private lastLoginId: number | undefined; */
 
-  constructor(
-    stateHandler: StateHandler,
-    router: Router,
-    serverHandler: ServerHandler,
-    loginHandler: LoginHandler,
-  ) {
+  constructor(loginHandler: LoginHandler) {
     super(ELEM_PARAMS.authPage);
-    this.stateHandler = stateHandler;
-    this.serverHandler = serverHandler;
-    this.router = router;
     this.loginHandler = loginHandler;
     this.nameInput = new ElementBuilder<HTMLInputElement>(ELEM_PARAMS.nameInput);
     this.nameInputHint = new ElementBuilder(ELEM_PARAMS.nameInputHint);
@@ -118,9 +106,11 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
       if (!testPattern.test(result)) message.push('letters and numbers only');
       if (message.length === 1) {
         this.nameInputHint.getElement().textContent = '';
+        this.isValidLogin = true;
         this.confirmBtn.getElement().removeAttribute('disabled');
       } else {
         this.nameInputHint.getElement().textContent = message.join(' ');
+        this.isValidLogin = false;
         this.confirmBtn.getElement().setAttribute('disabled', 'true');
       }
     });
@@ -141,9 +131,11 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
       if (testPatternSpecial.test(result)) message.push('no special characters');
       if (message.length === 1) {
         this.passwordInputHint.getElement().textContent = '';
+        this.isValidPassword = true;
         this.confirmBtn.getElement().removeAttribute('disabled');
       } else {
         this.passwordInputHint.getElement().textContent = message.join(' ');
+        this.isValidPassword = false;
         this.confirmBtn.getElement().setAttribute('disabled', 'true');
       }
     });
@@ -161,25 +153,12 @@ export default class AuthPage extends ComplexElement<HTMLElement> {
     this.confirmBtn.getElement().setAttribute('disabled', 'true');
   }
 
-  /*   protected configureLoginProcess(): void {
-    globalThis.addEventListener('userAuthGood', (event) => {
-      if (!(event instanceof CustomEvent)) return;
-      const data: unknown = event.detail;
-      if (ServerHandler.isValidData<ServerPayloadType['userAuth']>(data)) {
-        this.stateHandler.login = this.nameInput.getElement().value;
-        this.stateHandler.password = this.passwordInput.getElement().value;
-        this.stateHandler.isLoggedIn = true;
-        this.router.switchPageTo(PagesEnum.chat);
-      }
-    });
-  } */
-
   protected login(): void {
-    this.loginHandler.loginInit(
-      this.nameInput.getElement().value,
-      this.passwordInput.getElement().value,
-    );
-    this.router.switchPageTo(PagesEnum.chat);
+    if (this.isValidLogin && this.isValidPassword)
+      this.loginHandler.loginInit(
+        this.nameInput.getElement().value,
+        this.passwordInput.getElement().value,
+      );
   }
 
   protected configureAboutBtn(): void {

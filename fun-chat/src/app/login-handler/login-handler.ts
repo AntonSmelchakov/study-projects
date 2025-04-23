@@ -19,14 +19,24 @@ export default class LoginHandler {
   }
 
   public loginInit(newLogin: string, newPassword: string): void {
-    this.login = newLogin;
-    this.password = newPassword;
-    this.serverHandler.userAuth({
-      user: {
-        login: newLogin,
-        password: newPassword,
-      },
-    });
+    if (this.serverHandler.getState === 1) {
+      this.login = newLogin;
+      this.password = newPassword;
+      this.serverHandler.userAuth({
+        user: {
+          login: newLogin,
+          password: newPassword,
+        },
+      });
+    } else {
+      ServerHandler.dispatchCustomEvent('customServerError', {
+        id: null,
+        type: 'ERROR',
+        payload: {
+          error: 'connection not yet opened or already closed',
+        },
+      });
+    }
   }
 
   protected configureElement(): void {
@@ -45,6 +55,7 @@ export default class LoginHandler {
         this.stateHandler.isLoggedIn = true;
         this.stateHandler.setState();
       }
+      this.router.switchPageTo(PagesEnum.chat);
     });
   }
 

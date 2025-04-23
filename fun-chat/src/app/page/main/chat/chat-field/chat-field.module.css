@@ -1,0 +1,6 @@
+.chatField {
+  width: 70%;
+  flex-direction: column;
+  height: 95%;
+  justify-content: start;
+}

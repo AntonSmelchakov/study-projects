@@ -9,7 +9,7 @@ const ELEM_PARAMS = {
   userList: {
     tag: 'div',
     properties: {
-      className: 'user-list',
+      className: css.userList,
     },
   },
   searchBar: {
@@ -33,9 +33,9 @@ const ELEM_PARAMS = {
     },
   },
   userItem: {
-    tag: 'div',
+    tag: 'p',
     properties: {
-      className: 'user-item',
+      className: css.userItem,
     },
   },
 };
@@ -60,23 +60,22 @@ export default class UserList extends ComplexElement<HTMLElement> {
   }
 
   protected configureElement(): void {
-    globalThis.addEventListener('activeUsersReceived', (event) => {
-      this.userListHandler(this.onlineSection, event, 'user-item');
-    });
-    globalThis.addEventListener('inactiveUsersReceived', (event) => {
-      this.userListHandler(this.offlineSection, event, 'user-item');
-    });
-    try {
-      this.serverHandler.getActiveUsers();
-      this.serverHandler.getInactiveUsers();
-    } catch {
-      this.serverHandler.addEventListener('open', () => {
-        this.serverHandler.getActiveUsers();
-        this.serverHandler.getInactiveUsers();
-      });
-    }
+    this.configureUserList();
     this.configureSearch();
     this.element.append([this.searchBar, this.onlineSection, this.offlineSection]);
+  }
+
+  protected configureUserList(): void {
+    globalThis.addEventListener('userAuthGood', () => {
+      globalThis.addEventListener('activeUsersReceived', (event) => {
+        this.userListHandler(this.onlineSection, event, 'user-item');
+      });
+      globalThis.addEventListener('inactiveUsersReceived', (event) => {
+        this.userListHandler(this.offlineSection, event, 'user-item');
+      });
+      this.serverHandler.getActiveUsers();
+      this.serverHandler.getInactiveUsers();
+    });
   }
 
   protected configureSearch(): void {
@@ -128,7 +127,8 @@ export default class UserList extends ComplexElement<HTMLElement> {
         return;
       const name = data.messages[0].from;
       const element = this.users[name];
-      element.textContent += `${data.messages.length}`;
+      const unreadMessage = data.messages.filter((x) => x.status.isReaded === false);
+      element.textContent += ` ${unreadMessage.length}`;
     });
   }
 }
