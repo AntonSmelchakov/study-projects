@@ -39,8 +39,9 @@ export default class Chat extends ComplexElement<HTMLElement> {
   protected configureElement(): void {
     this.chatField.writeField.textField.getElement().setAttribute('disabled', 'true');
     this.userList.getElement().addEventListener('click', (event) => {
+      console.log(event.target, event.currentTarget);
       const target = event.target;
-      if (target instanceof HTMLElement && target.classList.contains('user-item')) {
+      if (target instanceof HTMLElement && target.classList.contains('userName')) {
         this.chatterName.getElement().textContent = target.textContent;
         this.stateHandler.currentChatWith = target.textContent || '';
         this.chatField.writeField.textField.getElement().removeAttribute('disabled');

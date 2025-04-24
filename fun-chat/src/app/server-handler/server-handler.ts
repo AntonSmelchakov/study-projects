@@ -1,5 +1,5 @@
 const BASE_URL = 'ws://127.0.0.1:4000';
-
+//192.168.0.1/
 /* enum API_DATA2 {
   userAuthentication = {
     type = "USER_LOGIN",

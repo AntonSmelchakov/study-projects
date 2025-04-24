@@ -35,7 +35,8 @@ export default class WritingField extends ComplexElement<HTMLElement> {
   protected configureElement(): void {
     this.element.getElement().addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
-        this.sendMessage();
+        event.preventDefault();
+        if (this.textField.getElement().value) this.sendMessage();
         this.textField.getElement().value = '';
       }
     });

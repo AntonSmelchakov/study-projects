@@ -3,6 +3,7 @@ import ServerHandler from '../../../../server-handler/server-handler';
 import type StateHandler from '../../../../state-handler/state-handler';
 import ComplexElement from '../../../../utils/complex-element';
 import ElementBuilder from '../../../../utils/element-builder';
+import UserItem from './user-item/user-item';
 import css from './user-list.module.css';
 
 const ELEM_PARAMS = {
@@ -32,12 +33,6 @@ const ELEM_PARAMS = {
       className: css.offlineSection,
     },
   },
-  userItem: {
-    tag: 'p',
-    properties: {
-      className: css.userItem,
-    },
-  },
 };
 
 export default class UserList extends ComplexElement<HTMLElement> {
@@ -46,7 +41,7 @@ export default class UserList extends ComplexElement<HTMLElement> {
   protected searchBar: ElementBuilder<HTMLInputElement>;
   protected onlineSection: ElementBuilder<HTMLElement>;
   protected offlineSection: ElementBuilder<HTMLElement>;
-  protected users: Record<string, HTMLElement>;
+  protected users: Record<string, UserItem>;
 
   constructor(serverHandler: ServerHandler, stateHandler: StateHandler) {
     super(ELEM_PARAMS.userList);
@@ -62,6 +57,7 @@ export default class UserList extends ComplexElement<HTMLElement> {
   protected configureElement(): void {
     this.configureUserList();
     this.configureSearch();
+    this.configureUnreadMsgDisplay();
     this.element.append([this.searchBar, this.onlineSection, this.offlineSection]);
   }
 
@@ -82,9 +78,9 @@ export default class UserList extends ComplexElement<HTMLElement> {
     this.searchBar.addEventListener('input', () => {
       const searchParameter = this.searchBar.getElement().value;
       for (const item of Object.values(this.users)) {
-        const string = item.textContent || '';
-        if (string.indexOf(searchParameter) === -1) item.classList.add(css.hidden);
-        else item.classList.remove(css.hidden);
+        const string = item.name;
+        if (string.indexOf(searchParameter) === -1) item.getElement().classList.add(css.hidden);
+        else item.getElement().classList.remove(css.hidden);
       }
     });
   }
@@ -101,16 +97,15 @@ export default class UserList extends ComplexElement<HTMLElement> {
     section.getElement().replaceChildren();
     for (const item of data.users) {
       if (item.login === this.stateHandler.login) continue;
-      const userItem = new ElementBuilder<HTMLElement>(ELEM_PARAMS.userItem);
-      userItem.getElement().textContent = item.login;
+      const userItem = new UserItem(item.login, '');
       userItem.getElement().classList.add(cssClass);
-      section.getElement().append(userItem.getElement());
+      section.append([userItem]);
       this.serverHandler.fetchMessages({
         user: {
           login: item.login,
         },
       });
-      this.users[item.login] = userItem.getElement();
+      this.users[item.login] = userItem;
     }
   }
 
@@ -128,7 +123,8 @@ export default class UserList extends ComplexElement<HTMLElement> {
       const name = data.messages[0].from;
       const element = this.users[name];
       const unreadMessage = data.messages.filter((x) => x.status.isReaded === false);
-      element.textContent += ` ${unreadMessage.length}`;
+      console.log(` ${unreadMessage.length}`);
+      element.messageCount = ` ${unreadMessage.length}`;
     });
   }
 }
